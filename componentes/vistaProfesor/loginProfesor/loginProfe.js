@@ -47,8 +47,46 @@ function cargarLoginProfe(){
     diIngPLog.textContent = "Ingresar";
     secLogProf.appendChild(diIngPLog);
 
-    diIngPLog.addEventListener("click", function(){
-        window.location.href = "../../paginas/paginasProfesor/configJuegos.html";
+    diIngPLog.addEventListener("click", async function(){
+
+        let capturaUserEm = inpUserProf.value;
+        let capturaPass = inpPassProf.value;
+
+        const errorExistente = secLogProf.querySelector(".error");
+        if (errorExistente) {
+          errorExistente.remove();
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  usuario: capturaUserEm,
+                  contraseña: capturaPass
+                })
+            })
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                let errorMsg = document.createElement('p');
+                errorMsg.className = "error";
+                errorMsg.textContent = data.message || "Error al iniciar sesión";
+                secLogProf.appendChild(errorMsg);
+                return;
+            }
+
+            window.location.href = "../../paginas/paginasProfesor/configJuegos.html";
+
+
+        } catch (error) {
+            console.log("ERROR en alguna parte :v",error)
+        }
+
+
     });
 
     

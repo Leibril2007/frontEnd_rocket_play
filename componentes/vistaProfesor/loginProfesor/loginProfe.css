@@ -3,6 +3,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+/*     background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/fondo%20login.jpg?raw=true');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 30% 33%; */
 }
 
 .sec-log-prof{
@@ -14,7 +19,7 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr repeat(2, 5rem) 8rem 5rem 8rem 14rem;
+    grid-template-rows: 1fr repeat(2, 5rem) 8rem 5rem 8rem 10rem 5rem;
     row-gap: 1rem;
 }
 
@@ -24,6 +29,10 @@
 
     align-self: center;
     justify-self: center;
+
+    max-width: 50rem;
+    width: 100%;
+    height: 50rem;
 }
 .img-l-prof{
     width: 100%;
@@ -91,4 +100,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.error{
+    grid-column: 2/3;
+    justify-self: center;
+    font-size: 2rem;
+    color: red;
+    align-self: self-start;
 }
