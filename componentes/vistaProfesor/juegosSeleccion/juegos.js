@@ -32,15 +32,22 @@ function cargarJuegos(){
     let divEmoProf = document.createElement('div');
     divEmoProf.className = "cuadro-juego div-emo-prof";
     secProfesor.appendChild(divEmoProf);
+    divEmoProf.addEventListener("click", function(){
+        window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
+    })
 
     let titEmoP =  document.createElement('h3');
     titEmoP.className = "tit-jueg-p tit-emo-p";
     titEmoP.textContent = "Emoji Game";
     secProfesor.appendChild(titEmoP);
+    
 
     let divSimonProf = document.createElement('div');
     divSimonProf.className = "cuadro-juego div-simon-prof";
     secProfesor.appendChild(divSimonProf);
+    divSimonProf.addEventListener("click", function(){
+        window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
+    })
 
     let titSimonP =  document.createElement('h3');
     titSimonP.className = "tit-jueg-p tit-simon-p";
@@ -50,6 +57,9 @@ function cargarJuegos(){
     let divMedAmP = document.createElement('div');
     divMedAmP.className = "cuadro-juego div-med-am-p";
     secProfesor.appendChild(divMedAmP);
+    divMedAmP.addEventListener("click", function(){
+        window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
+    })
 
     let titMedAmP =  document.createElement('h3');
     titMedAmP.className = "tit-jueg-p tit-med-am-p";
