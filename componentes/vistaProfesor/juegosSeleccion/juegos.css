@@ -6,8 +6,9 @@
 .sec-profesor{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 15rem 20rem 6rem;
+    grid-template-rows: 15rem 20rem 6rem 6rem 10rem 6rem 7.8rem 7rem;
     gap: 1rem;
+    padding: 0.5rem;
 }
 .tit-sec-jueg-prof{
     grid-column: 1/5;
@@ -74,4 +75,76 @@
     grid-row: 3/4;
 }
 
+/* TIEMPO */
 
+.tit-time-p{
+    grid-column: 1/5;
+    font-size: 2.3rem;
+    
+    align-self: center;
+    justify-self: center;
+}
+
+.dv-base-time-ps{
+    grid-column: 1/5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10rem;
+}
+
+.dv-time{
+    cursor: pointer;
+    width: 100%;
+    max-width: 18rem;
+    height: 3.5rem;
+    background-color: rgb(192, 192, 192);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+}
+
+.btn-crear-p{
+    grid-column: 1/5;
+
+    width: 100%;
+    max-width: 15rem;
+    height: 4rem;
+    font-size: 2rem;
+    background-color: gainsboro;
+    cursor: pointer;
+
+    align-self: center;
+    justify-self: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* NIVELES */
+
+.dv-niv{
+
+    cursor: pointer;
+    width: 100%;
+    max-width: 18rem;
+    height: 5rem;
+    background-color: rgb(192, 192, 192);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+
+}
+
+.colorMarcar{
+    border: 2px solid green;
+}

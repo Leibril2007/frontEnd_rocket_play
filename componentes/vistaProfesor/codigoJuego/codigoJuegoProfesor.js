@@ -4,6 +4,37 @@ let codJuegoP = document.querySelector("#confJuegosP");
 
 codJuegoP.appendChild(headerProf());
 
+let estadoVar = "false";
+
+function enviarCodigoJuego(codigoRec, estRec){
+
+    fetch('http://localhost:3000/partidas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            codigo: codigoRec,
+            estado: estRec
+        })
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al guardar el usuario');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Codigo enviado con exito:', data);
+      })
+      .catch(error => {
+        console.error('Hubo un problema con la solicitud:', error);
+      }); 
+
+
+}
+
+
 // Función para generar un código de juego aleatorio
 function generarCodigoJuego() {
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -69,6 +100,13 @@ function cargarCodigoJuego() {
     btnInJuegP.addEventListener('click', function() {
         // Aquí puedes agregar la lógica para iniciar la partida, como actualizar el estado en el backend
         console.log("Juego Iniciado");
+
+        if(estadoVar == "false"){
+            estadoVar = "true";
+            let codGenerado = codGP.textContent;
+            enviarCodigoJuego(codGenerado, estadoVar);
+            alert("CODIGO ENVIADO");      
+        }
     });
     
     secCodP.appendChild(btnInJuegP);
