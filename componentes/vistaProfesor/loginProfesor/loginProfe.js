@@ -19,33 +19,38 @@ function cargarLoginProfe(){
     bnvProf.textContent = "¡Bienvenido a Rocket Play!";
     secLogProf.appendChild(bnvProf);
 
+    let dvBaseFormL = document.createElement('div');
+    dvBaseFormL.className = "dv-base-form-l";
+
     let titLProf = document.createElement('h2');
     titLProf.className = "tit-gen-prof tit-l-prof";
     titLProf.textContent = "Login";
-    secLogProf.appendChild(titLProf);
+    dvBaseFormL.appendChild(titLProf);
 
     let titUsProf = document.createElement('h2');
     titUsProf.className = "tit-us-prof tit-gen-prof";
     titUsProf.textContent = "Usuario o correo";
-    secLogProf.appendChild(titUsProf);
+    dvBaseFormL.appendChild(titUsProf);
 
     let inpUserProf = document.createElement('input');
     inpUserProf.className = "inp-prof inp-user-p";
-    secLogProf.appendChild(inpUserProf);
+    dvBaseFormL.appendChild(inpUserProf);
 
     let titPassProf = document.createElement('h2');
     titPassProf.className = "tit-pas-prof tit-gen-prof";
     titPassProf.textContent = "Contraseña";
-    secLogProf.appendChild(titPassProf);
+    dvBaseFormL.appendChild(titPassProf);
 
     let inpPassProf = document.createElement('input');
     inpPassProf.className = "inp-prof inp-pass-p";
-    secLogProf.appendChild(inpPassProf);
+    dvBaseFormL.appendChild(inpPassProf);
 
     let diIngPLog = document.createElement('div');
     diIngPLog.className = "di-ing-p-log";
     diIngPLog.textContent = "Ingresar";
-    secLogProf.appendChild(diIngPLog);
+    dvBaseFormL.appendChild(diIngPLog);
+
+    secLogProf.appendChild(dvBaseFormL);
 
     diIngPLog.addEventListener("click", async function(){
 
@@ -75,7 +80,7 @@ function cargarLoginProfe(){
                 let errorMsg = document.createElement('p');
                 errorMsg.className = "error";
                 errorMsg.textContent = data.message || "Error al iniciar sesión";
-                secLogProf.appendChild(errorMsg);
+                dvBaseFormL.appendChild(errorMsg);
                 return;
             }
 

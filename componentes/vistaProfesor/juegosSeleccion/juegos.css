@@ -5,19 +5,22 @@
 
 .sec-profesor{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 15rem 20rem 6rem 6rem 10rem 6rem 7.8rem 7rem;
-    gap: 1rem;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 15rem 20rem 20rem 6rem 6rem 10rem 6rem 7.8rem 7rem;
+    row-gap: 1rem;
     padding: 0.5rem;
 }
 .tit-sec-jueg-prof{
-    grid-column: 1/5;
+    grid-column: 1/6;
     grid-row: 1/2;
     
     align-self: center;
     justify-self: center;
     font-size: 3rem;
 }
+
+/* JUEGOS */
+
 .cuadro-juego{
     width: 100%;
     max-width: 20rem;
@@ -34,7 +37,7 @@
     grid-row: 1/2;
 
     font-size: 2rem;
-    align-self: center;
+/*     align-self: center; */
     justify-self: center;
 }
 
@@ -50,11 +53,11 @@
 
 .div-emo-prof{
     grid-column: 2/3;
-    grid-row: 2/3;
+    grid-row: 3/4;
 }
 .tit-emo-p{
     grid-column: 2/3;
-    grid-row: 3/4;
+    grid-row: 4/5;
 }
 
 .div-simon-prof{
@@ -68,17 +71,29 @@
 
 .div-med-am-p{
     grid-column: 4/5;
-    grid-row: 2/3;
+    grid-row: 3/4;
 }
 .tit-med-am-p{
     grid-column: 4/5;
+    grid-row: 4/5;
+}
+
+.div-jueg-5{
+    grid-column: 5/6;
+    grid-row: 2/3;
+}
+.tit-jueg-5{
+    grid-column: 5/6;
     grid-row: 3/4;
 }
+
+
+
 
 /* TIEMPO */
 
 .tit-time-p{
-    grid-column: 1/5;
+    grid-column: 1/6;
     font-size: 2.3rem;
     
     align-self: center;
@@ -110,7 +125,7 @@
 }
 
 .btn-crear-p{
-    grid-column: 1/5;
+    grid-column: 1/6;
 
     width: 100%;
     max-width: 15rem;

@@ -4,14 +4,15 @@
     align-items: center;
     justify-content: center;
 
-/*     background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/fondo%20login.jpg?raw=true');
+    background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/fondo%20login.jpg?raw=true');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 30% 33%; */
+    background-position: 30% 33%;
 }
 
 .sec-log-prof{
-    background-color: gainsboro;
+/*     background-color: gainsboro; */
+    background: transparent;
     width: 100%;
     max-width: 145rem;
     height: 100%;
@@ -39,33 +40,57 @@
     height: 100%;
 }
 
+.dv-base-form-l{
+    grid-row: 2/8;
+    background-color: rgba(255, 255, 255, 0.653);
+    width: 100%;
+    max-width: 48rem;
+    border-radius: 0.5rem;
+    justify-self: center;
+
+    display: grid;
+    grid-template-rows: repeat(2, 5rem) 8rem 5rem 8rem 10rem 5rem;
+}
+
 .bnv-prof{
     grid-row: 1/2;
     grid-column: 2/3;
 
-    font-size: 3.5rem;
+    font-size: 8.5rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
 
     align-self: center;
     justify-self: center;
 }
 .tit-gen-prof{
-    font-size: 2rem;
+    font-size: 3.5rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: rgb(46, 46, 46);
 
     align-self: center;
     justify-self: center;
 }
 .tit-l-prof{
-    grid-row: 2/3;
-    grid-column: 2/3;
+    grid-row: 1/2;
+    grid-column: 1/2;
 }
 .tit-us-prof{
-    grid-row: 3/4;
-    grid-column: 2/3;
+    grid-row: 2/3;
+    grid-column: 1/2;
 }
 
 .inp-prof{
     align-self: self-start;
     justify-self: center;
+    outline: none;
+    border: none;
+    padding: 1rem;
+    font-family: jomhuria;
+    font-size: 2.7rem;
+    color: #5C55DF;
 
     width: 100%;
     max-width: 35rem;
@@ -73,28 +98,31 @@
 } 
 
 .inp-user-p{
-    grid-row: 4/5;
-    grid-column: 2/3;
+    grid-row: 3/4;
+    grid-column: 1/2;
 }
 .tit-pas-prof {
-    grid-row: 5/6;
-    grid-column: 2/3;
+    grid-row: 4/5;
+    grid-column: 1/2;
 }
 .inp-pass-p{
-    grid-row: 6/7;
-    grid-column: 2/3;
+    grid-row: 5/6;
+    grid-column: 1/2;
 }
 .di-ing-p-log{
     align-self: self-start;
     justify-self: center;
-    grid-row: 7/8;
-    grid-column: 2/3;
+    grid-row: 6/7;
+    grid-column: 1/2;
 
-    background-color: rgb(185, 185, 185);
+    background-color: #5C55DF;
+    border-radius: 0.2rem;
+    color: aliceblue;
+    font-family: jomhuria;
     width: 100%;
     max-width: 16rem;
     height: 4.5rem; 
-    font-size: 2rem;
+    font-size: 3.5rem;
     cursor: pointer;
     
     display: flex;
@@ -103,7 +131,7 @@
 }
 
 .error{
-    grid-column: 2/3;
+    grid-column: 1/2;
     justify-self: center;
     font-size: 2rem;
     color: red;
