@@ -1,6 +1,10 @@
 #seccionProfesor{
     display: grid;
     grid-template-rows: auto 1fr;
+
+    background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/space.jpg?raw=true');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .sec-profesor{
@@ -16,7 +20,10 @@
     
     align-self: center;
     justify-self: center;
-    font-size: 3rem;
+    font-size: 6rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
 }
 
 /* JUEGOS */
@@ -36,9 +43,13 @@
     grid-column: 1/3;
     grid-row: 1/2;
 
-    font-size: 2rem;
 /*     align-self: center; */
     justify-self: center;
+
+    font-size: 4rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
 }
 
 .div-mem-prof{
@@ -72,6 +83,12 @@
 .div-med-am-p{
     grid-column: 4/5;
     grid-row: 3/4;
+    width: 100%;
+    height: 100%;
+
+    background-image: url('https://cdn-icons-png.flaticon.com/512/5499/5499392.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .tit-med-am-p{
     grid-column: 4/5;
@@ -161,5 +178,23 @@
 }
 
 .colorMarcar{
-    border: 2px solid green;
+    /* border: 2px solid green; */
+
+    background-color: #0f0f0f; /* Fondo oscuro */
+    border: 2px solid #5C55DF;
+    padding: 20px;
+    color: #ffffff;
+    font-size: 1.2em;
+    border-radius: 8px;
+    text-align: center;
+  
+    /* Glow (neón) con sombra */
+    box-shadow: 
+      0 0 5px #5C55DF,
+      0 0 10px #5C55DF,
+      0 0 20px #5C55DF,
+      0 0 40px #5C55DF;
+  
+    /* Degradado en texto (opcional) */
+    background: linear-gradient(90deg, #5C55DF, #8A7FFF);
 }
