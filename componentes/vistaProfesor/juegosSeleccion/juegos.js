@@ -101,7 +101,7 @@ function cargarJuegos(){
 
     let titMedAmP =  document.createElement('h3');
     titMedAmP.className = "tit-jueg-p tit-med-am-p";
-    titMedAmP.textContent = "Recicla y Gana";
+    titMedAmP.textContent = "EcoHéroes";
     secProfesor.appendChild(titMedAmP);
 
     /* JUEGO 5 */
