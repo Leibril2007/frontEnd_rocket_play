@@ -196,6 +196,96 @@ function cargarJuegos(){
         
     });
 
+    let dvNiv5 =  document.createElement('div');
+    dvNiv5.className = "dv-niv niv5";
+    dvNiv5.textContent = "Nivel 5";
+    dvBaseNivP.appendChild(dvNiv5);
+
+    dvNiv5.addEventListener('click', function(){
+
+        if(!this.classList.contains("colorMarcar")){
+            this.classList.add("colorMarcar");
+        } else {
+            this.classList.remove("colorMarcar");
+        } 
+        
+    });
+
+    let dvNiv6 =  document.createElement('div');
+    dvNiv6.className = "dv-niv niv6";
+    dvNiv6.textContent = "Nivel 6";
+    dvBaseNivP.appendChild(dvNiv6);
+
+    dvNiv6.addEventListener('click', function(){
+
+        if(!this.classList.contains("colorMarcar")){
+            this.classList.add("colorMarcar");
+        } else {
+            this.classList.remove("colorMarcar");
+        } 
+        
+    });
+
+    let dvNiv7 =  document.createElement('div');
+    dvNiv7.className = "dv-niv niv7";
+    dvNiv7.textContent = "Nivel 7";
+    dvBaseNivP.appendChild(dvNiv7);
+
+    dvNiv7.addEventListener('click', function(){
+
+        if(!this.classList.contains("colorMarcar")){
+            this.classList.add("colorMarcar");
+        } else {
+            this.classList.remove("colorMarcar");
+        } 
+        
+    });
+
+    let dvNiv8 =  document.createElement('div');
+    dvNiv8.className = "dv-niv niv8";
+    dvNiv8.textContent = "Nivel 8";
+    dvBaseNivP.appendChild(dvNiv8);
+
+    dvNiv8.addEventListener('click', function(){
+
+        if(!this.classList.contains("colorMarcar")){
+            this.classList.add("colorMarcar");
+        } else {
+            this.classList.remove("colorMarcar");
+        } 
+        
+    });
+
+    let dvNiv9 =  document.createElement('div');
+    dvNiv9.className = "dv-niv niv9";
+    dvNiv9.textContent = "Nivel 9";
+    dvBaseNivP.appendChild(dvNiv9);
+
+    dvNiv9.addEventListener('click', function(){
+
+        if(!this.classList.contains("colorMarcar")){
+            this.classList.add("colorMarcar");
+        } else {
+            this.classList.remove("colorMarcar");
+        } 
+        
+    });
+
+    let dvNiv10 =  document.createElement('div');
+    dvNiv10.className = "dv-niv niv10";
+    dvNiv10.textContent = "Nivel 10";
+    dvBaseNivP.appendChild(dvNiv10);
+
+    dvNiv10.addEventListener('click', function(){
+
+        if(!this.classList.contains("colorMarcar")){
+            this.classList.add("colorMarcar");
+        } else {
+            this.classList.remove("colorMarcar");
+        } 
+        
+    });
+
     secProfesor.appendChild(dvBaseNivP);
 
 

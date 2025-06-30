@@ -1,6 +1,7 @@
 #seccionProfesor{
     display: grid;
     grid-template-rows: auto 1fr;
+/*     height: 100vh; */
 
     background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/space.jpg?raw=true');
     background-repeat: no-repeat;
@@ -10,7 +11,7 @@
 .sec-profesor{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 15rem 20rem 20rem 6rem 6rem 10rem 6rem 7.8rem 7rem;
+    grid-template-rows: 15rem 20rem 20rem 6rem 6rem 21rem 6rem 7.8rem 7rem;
     row-gap: 1rem;
     padding: 0.5rem;
 }
@@ -111,20 +112,25 @@
 
 .tit-time-p{
     grid-column: 1/6;
-    font-size: 2.3rem;
+    font-size: 4.5rem;
     
     align-self: center;
     justify-self: center;
+
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
 }
 
 .dv-base-time-ps{
-    grid-column: 1/5;
+    grid-column: 1/6;
 
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 
-    gap: 10rem;
+    gap: 2.5rem;
 }
 
 .dv-time{
@@ -132,13 +138,17 @@
     width: 100%;
     max-width: 18rem;
     height: 3.5rem;
-    background-color: rgb(192, 192, 192);
+    background-color: #569ee6;
+    border-radius: 2px;
+    font-size: 3.5rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 2rem;
 }
 
 .btn-crear-p{
@@ -147,8 +157,12 @@
     width: 100%;
     max-width: 15rem;
     height: 4rem;
-    font-size: 2rem;
-    background-color: gainsboro;
+    font-size: 3.8rem;
+    background-color: #5C55DF;
+    border-radius: 0.5rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
     cursor: pointer;
 
     align-self: center;
@@ -159,32 +173,44 @@
     justify-content: center;
 }
 
+.btn-crear-p:hover{
+
+    background-color: #ab0cbd;
+    transition: 0.3s;
+
+}
+
 /* NIVELES */
 
 .dv-niv{
 
     cursor: pointer;
-    width: 100%;
-    max-width: 18rem;
-    height: 5rem;
-    background-color: rgb(192, 192, 192);
+    background-color: #ff81fb;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 2rem;
+    font-size: 3.5rem;
+    font-family: jomhuria;
+    font-weight: 200;
+    color: white;
+    border-radius: 2px;
+
+    width: 100%;
+    max-width: 15rem;
+    height: 5rem;
 
 }
 
-.colorMarcar{
-    /* border: 2px solid green; */
 
-    background-color: #0f0f0f; /* Fondo oscuro */
+.colorMarcar{
+
+    background-color: #0f0f0f; 
     border: 2px solid #5C55DF;
     padding: 20px;
     color: #ffffff;
-    font-size: 1.2em;
+/*     font-size: 2em; */
     border-radius: 8px;
     text-align: center;
   
@@ -196,5 +222,6 @@
       0 0 40px #5C55DF;
   
     /* Degradado en texto (opcional) */
+    background: linear-gradient(90deg, #5C55DF, #8A7FFF);
     background: linear-gradient(90deg, #5C55DF, #8A7FFF);
 }
