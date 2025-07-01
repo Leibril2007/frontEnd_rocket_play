@@ -32,7 +32,11 @@ function inicioApp() {
     btnAlumPrin.className = "btn-prin-gen btn-alum-prin";
     btnAlumPrin.textContent = "Alumno";
     secPrincipal.appendChild(btnAlumPrin);
-        
+
+    btnAlumPrin.addEventListener("click", function(){
+        window.location.href = "componentes/paginas/alumno/loginAlumno.html";
+    })
+
 
     let btnProfPrin = document.createElement('div');
     btnProfPrin.className = "btn-prin-gen btn-prof-prin";
