@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.game-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.target-container {
+    margin-bottom: 20px;
+}
+
+.target-emoji {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.hint {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+}
+
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.emoji-item {
+    font-size: 30px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    padding: 15px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.emoji-item:hover {
+    background-color: #dee2e6;
+}
+
+.emoji-item.correct {
+    background-color: #a3e4a3;
+}
+
+.emoji-item.incorrect {
+    background-color: #f5b7b1;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score {
+    font-size: 18px;
+    color: #333;
+}
+
+.next-level button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.next-level button:hover {
+    background-color: #45a049;
+}
