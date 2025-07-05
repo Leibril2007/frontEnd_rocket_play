@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trivia Espacial</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div id="gameTab" class="tab active">
+      <h1>Nivel <span id="nivel">1</span></h1>
+      <h2 id="pregunta">Cargando...</h2>
+      <div id="opciones" class="options-container"></div>
+      <div class="game-info">
+        <div>⏱️ <span id="tiempo">10</span>s</div>
+        <div id="vidas">❤️❤️❤️</div>
+        <div>⭐ <span id="puntaje">0</span> pts</div>
+      </div>
+    </div>
+
+    <div id="resultTab" class="tab">
+      <h1 id="tituloResultado">🎉 Resultados Finales</h1>
+      <div id="resultados"></div>
+      <button onclick="descargarResultados()">📄 Descargar Resultados</button>
+      <button onclick="location.reload()">🔁 Volver a Jugar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
