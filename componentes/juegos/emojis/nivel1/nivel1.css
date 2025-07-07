@@ -19,7 +19,160 @@ body {
     text-align: center;
 }
 
-.header {
+.header {@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+    /* Fondo animado con emojis */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Comic Neue', cursive;
+        background-image: url('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/354/party-popper_1f389.png'),
+                          url('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/354/star-struck_1f929.png'),
+                          url('https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/apple/354/smiling-face-with-hearts_1f970.png');
+        background-repeat: repeat;
+        background-size: 80px;
+        background-position: center;
+        animation: moveBackground 30s linear infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    
+    @keyframes moveBackground {
+        0% { background-position: 0 0; }
+        100% { background-position: 1000px 1000px; }
+    }
+    
+    .game-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        width: 95%;
+        max-width: 1000px;
+        text-align: center;
+        border: 6px dotted #fbc02d;
+    }
+    
+    .header {
+        font-size: 28px;
+        font-weight: bold;
+        color: #f06292;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px #fff;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+    
+    .target-container {
+        background-color: #e1f5fe;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        border: 3px dashed #81d4fa;
+    }
+    
+    .target-emoji {
+        font-size: 60px;
+        margin-bottom: 10px;
+        animation: bounceEmoji 2s infinite;
+    }
+    
+    @keyframes bounceEmoji {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+    }
+    
+    .hint {
+        font-size: 18px;
+        color: #5c6bc0;
+        font-style: italic;
+    }
+    
+    .emoji-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        margin: 30px 0;
+    }
+    
+    .emoji-item {
+        font-size: 42px;
+        background-color: #fff8e1;
+        border: 4px solid #ffe082;
+        border-radius: 15px;
+        padding: 20px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        animation: emojiPop 0.6s ease;
+    }
+    
+    .emoji-item:hover {
+        background-color: #fff176;
+        transform: scale(1.15);
+    }
+    
+    @keyframes emojiPop {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .emoji-item.correct {
+        background-color: #a5d6a7;
+        border-color: #66bb6a;
+        animation: sparkle 0.5s ease-in-out;
+    }
+    
+    .emoji-item.incorrect {
+        background-color: #ef9a9a;
+        border-color: #e57373;
+        animation: shake 0.4s ease;
+    }
+    
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+    
+    @keyframes sparkle {
+        0% { box-shadow: 0 0 0px #fff; }
+        50% { box-shadow: 0 0 12px #fff; }
+        100% { box-shadow: 0 0 0px #fff; }
+    }
+    
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        color: #7b1fa2;
+        padding: 0 10px;
+    }
+    
+    .next-level button {
+        padding: 14px 28px;
+        background-color: #ffca28;
+        color: #6d4c41;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        box-shadow: 0 6px #fbc02d;
+    }
+    
+    .next-level button:hover {
+        background-color: #ffee58;
+        transform: scale(1.1);
+    }
+    
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
@@ -31,7 +184,151 @@ body {
     margin-bottom: 20px;
 }
 
-.target-emoji {
+.target-emoji {@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Comic Neue', cursive;
+        background: linear-gradient(135deg, #ffe8ec, #e0f7fa);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    .game-container {
+        background-color: #fff3e0;
+        border-radius: 25px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        width: 90%;
+        max-width: 950px;
+        text-align: center;
+        border: 5px dashed #ffcc80;
+        animation: float 4s infinite ease-in-out;
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+    }
+    
+    .header {
+        font-size: 26px;
+        font-weight: bold;
+        color: #ff7043;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px #fff;
+    }
+    
+    .target-container {
+        background-color: #fffde7;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        box-shadow: inset 0 0 15px #fdd835;
+    }
+    
+    .target-emoji {
+        font-size: 60px;
+        margin-bottom: 10px;
+    }
+    
+    .hint {
+        font-size: 18px;
+        color: #7b1fa2;
+        font-style: italic;
+    }
+    
+    .emoji-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 18px;
+        padding: 0 20px;
+        margin-bottom: 30px;
+    }
+    
+    .emoji-item {
+        font-size: 40px;
+        background-color: #ffe0b2;
+        border: 3px solid #ffb74d;
+        border-radius: 15px;
+        padding: 20px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        animation: bounceIn 0.6s ease;
+    }
+    
+    .emoji-item:hover {
+        background-color: #ffd54f;
+        transform: scale(1.15) rotate(-2deg);
+    }
+    
+    .emoji-item.correct {
+        background-color: #aed581;
+        border-color: #7cb342;
+        animation: sparkle 0.5s ease-in-out;
+    }
+    
+    .emoji-item.incorrect {
+        background-color: #ef9a9a;
+        border-color: #e57373;
+        animation: shake 0.4s ease;
+    }
+    
+    /* Animaciones divertidas */
+    @keyframes bounceIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        50% { transform: translateX(6px); }
+        75% { transform: translateX(-6px); }
+        100% { transform: translateX(0); }
+    }
+    
+    @keyframes sparkle {
+        0% { box-shadow: 0 0 0px #fff; }
+        50% { box-shadow: 0 0 10px #fff; }
+        100% { box-shadow: 0 0 0px #fff; }
+    }
+    
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+    }
+    
+    .score {
+        font-size: 22px;
+        color: #ff4081;
+    }
+    
+    .next-level button {
+        padding: 12px 24px;
+        background-color: #ffca28;
+        color: #4e342e;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        box-shadow: 0 6px #fbc02d;
+    }
+    
+    .next-level button:hover {
+        background-color: #fff176;
+        transform: scale(1.1);
+    }
+    
     font-size: 24px;
     margin-bottom: 5px;
 }
@@ -74,7 +371,134 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #fdfbfb, #ebedee);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
+
+.game-container {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    width: 85%;
+    max-width: 900px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 22px;
+    color: #444;
+}
+
+.target-container {
+    margin-bottom: 25px;
+    background-color: #e3f2fd;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.target-emoji {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.hint {
+    font-size: 16px;
+    color: #666;
+    font-style: italic;
+}
+
+.emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.emoji-item {
+    font-size: 36px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 20px 0;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.emoji-item:hover {
+    transform: scale(1.1);
+    background-color: #dfe6e9;
+}
+
+.emoji-item.correct {
+    background-color: #c8f7c5;
+    animation: pop 0.3s ease;
+}
+
+.emoji-item.incorrect {
+    background-color: #f8d7da;
+    animation: shake 0.3s ease;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.score {
+    font-size: 20px;
+    color: #333;
+}
+
+.next-level button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.next-level button:hover {
+    background-color: #43a047;
+    transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
 
 .score {
     font-size: 18px;
@@ -87,7 +511,166 @@ body {
     color: white;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
+    cursor: pointer;@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Fredoka One', cursive;
+        background: radial-gradient(circle at top, #fbe9e7, #ffe0f0);
+        overflow: hidden;
+    }
+    
+    .emoji-bg {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0; left: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: url('https://emojicdn.elk.sh/🎉'), url('https://emojicdn.elk.sh/😂'), url('https://emojicdn.elk.sh/😍');
+        background-repeat: repeat;
+        background-size: 100px;
+        animation: moveBG 50s linear infinite;
+        opacity: 0.15;
+    }
+    
+    @keyframes moveBG {
+        0% { background-position: 0 0; }
+        100% { background-position: 2000px 2000px; }
+    }
+    
+    .game-container {
+        position: relative;
+        z-index: 1;
+        max-width: 1000px;
+        margin: 50px auto;
+        background-color: #fffde7;
+        border: 8px solid #ffb300;
+        border-radius: 30px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 26px;
+        color: #ec407a;
+        margin-bottom: 20px;
+        padding: 0 20px;
+    }
+    
+    .title {
+        font-size: 36px;
+        color: #d81b60;
+        text-shadow: 2px 2px #ffccbc;
+        margin-bottom: 10px;
+    }
+    
+    .target-container {
+        background-color: #b2ebf2;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 30px;
+        border: 4px dashed #4dd0e1;
+    }
+    
+    .target-emoji {
+        font-size: 60px;
+        animation: bounceEmoji 2s infinite;
+    }
+    
+    .hint {
+        font-size: 18px;
+        color: #006064;
+        font-style: italic;
+        margin-top: 10px;
+    }
+    
+    @keyframes bounceEmoji {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .emoji-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 20px;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    
+    .emoji-item {
+        font-size: 40px;
+        background-color: #fce4ec;
+        border: 3px solid #f06292;
+        border-radius: 15px;
+        padding: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 8px 10px rgba(0,0,0,0.1);
+    }
+    
+    .emoji-item:hover {
+        background-color: #f8bbd0;
+        transform: scale(1.2) rotate(-3deg);
+    }
+    
+    .emoji-item.correct {
+        background-color: #c5e1a5;
+        border-color: #8bc34a;
+        animation: sparkle 0.5s ease-in-out;
+    }
+    
+    .emoji-item.incorrect {
+        background-color: #ef9a9a;
+        border-color: #d32f2f;
+        animation: shake 0.4s ease;
+    }
+    
+    @keyframes sparkle {
+        0% { box-shadow: 0 0 0px #fff; }
+        50% { box-shadow: 0 0 12px #fff; }
+        100% { box-shadow: 0 0 0px #fff; }
+    }
+    
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+    }
+    
+    .footer {
+        font-size: 20px;
+        color: #5e35b1;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+    
+    .next-level button {
+        padding: 15px 30px;
+        background-color: #ffca28;
+        border: none;
+        font-size: 18px;
+        color: #5d4037;
+        font-weight: bold;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px #fbc02d;
+    }
+    
+    .next-level button:hover {
+        background-color: #ffee58;
+        transform: scale(1.1);
+    }
+    
 }
 
 .next-level button:hover {
