@@ -18,6 +18,9 @@ function generarCodigoJuego() {
 
 // Enviar la partida al backend al inicio
 function enviarCodigoJuego(codigoRec, estRec) {
+
+  console.log("codg", codGenerado, "est", estRec);
+
   fetch('http://localhost:3000/partidas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -103,7 +106,7 @@ function cargarCodigoJuego() {
     if (estadoVar === "false") {
       estadoVar = "true";
       fetch("http://localhost:3000/partidas", {
-        method: "PUT", // o PATCH si usas ese método
+        method: "PUT", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ codigo: codGenerado, estado: estadoVar })
       }).then(res => res.json())
