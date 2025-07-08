@@ -18,6 +18,9 @@ function generarCodigoJuego() {
 
 // Enviar la partida al backend al inicio
 function enviarCodigoJuego(codigoRec, estRec) {
+
+  console.log("codg", codGenerado, "est", estRec);
+
   fetch('http://localhost:3000/partidas', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -99,17 +102,19 @@ function cargarCodigoJuego() {
   btnInJuegP.className = "btn-in-jueg-p";
   btnInJuegP.textContent = "Iniciar Juego";
 
+  localStorage.setItem("codigoGen", codGenerado);
+
   btnInJuegP.addEventListener('click', function () {
     if (estadoVar === "false") {
       estadoVar = "true";
-      fetch("http://localhost:3000/partidas", {
-        method: "PUT", // o PATCH si usas ese método
+      fetch(`http://localhost:3000/partidasEstadoCambio/${codGenerado}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ codigo: codGenerado, estado: estadoVar })
-      }).then(res => res.json())
-        .then(data => {
-          alert("Juego Iniciado");
-        });
+        body: JSON.stringify({ estado: estadoVar })
+      })
+
+      alert("se cambio estado");
+
     }
   });
 
