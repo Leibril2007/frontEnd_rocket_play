@@ -30,11 +30,6 @@ body {
     opacity: 0.1;
 }
 
-@keyframes moveBG {
-    0% { background-position: 0 0, 100px 100px, 200px 200px, 300px 300px, 400px 400px; }
-    100% { background-position: 1000px 1000px, 1100px 1100px, 1200px 1200px, 1300px 1300px, 1400px 1400px; }
-}
-
 .game-container {
     position: relative;
     z-index: 1;
@@ -46,12 +41,6 @@ body {
     padding: 30px;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-    animation: float 4s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
 }
 
 .header {
@@ -59,7 +48,6 @@ body {
     color: #d81b60;
     text-shadow: 3px 3px 0 #ffccbc, 6px 6px 0 rgba(0,0,0,0.1);
     margin-bottom: 20px;
-    letter-spacing: 1px;
 }
 
 .target-container {
@@ -69,24 +57,31 @@ body {
     margin-bottom: 30px;
     border: 4px dashed #4dd0e1;
     box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-    animation: pulse 3s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
+    position: relative;
 }
 
 .target-emoji {
     font-size: 60px;
     margin: 10px 0;
-    display: block;
-    animation: bounce 2s infinite;
+    display: inline-block;
+    animation: targetAnimation 1.5s infinite ease-in-out;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+.target-memory {
+    position: absolute;
+    font-size: 60px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes targetAnimation {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(5deg); }
+    50% { transform: scale(1.05) rotate(-5deg); }
+    75% { transform: scale(1.1) rotate(5deg); }
 }
 
 .hint {
@@ -96,86 +91,86 @@ body {
     margin-top: 10px;
 }
 
+#countdown {
+    font-weight: bold;
+    color: #d81b60;
+    animation: pulse 0.5s infinite;
+}
+
+#timer, #lives {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#timer {
+    color: #5e35b1;
+}
+
+.time-critical {
+    color: #ff0000 !important;
+    animation: pulse 0.5s infinite;
+}
+
+#lives {
+    color: #e53935;
+}
+
 .emoji-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    justify-content: center;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
     margin: 20px 0;
 }
 
 .emoji-item {
-    font-size: 40px;
+    font-size: 24px;
     background-color: #fce4ec;
     border: 3px solid #f06292;
-    border-radius: 15px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    animation: popIn 0.5s ease-out;
-    position: relative;
-    overflow: hidden;
-}
-
-@keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    80% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
+    transition: all 0.2s;
+    animation: popIn 0.3s ease-out;
 }
 
 .emoji-item:hover {
     background-color: #f8bbd0;
-    transform: scale(1.15) rotate(-3deg);
-    box-shadow: 0 12px 20px rgba(0,0,0,0.2);
-}
-
-.emoji-item::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255,255,255,0.1);
-    transform: rotate(45deg);
-    transition: all 0.3s;
-}
-
-.emoji-item:hover::before {
-    left: 100%;
 }
 
 .emoji-item.correct {
     background-color: #c5e1a5;
     border-color: #8bc34a;
-    animation: sparkle 0.5s ease-in-out, celebrate 1s ease;
+    animation: sparkle 0.5s;
 }
 
 .emoji-item.incorrect {
     background-color: #ef9a9a;
     border-color: #d32f2f;
-    animation: shake 0.4s ease;
+    animation: shake 0.4s;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes sparkle {
     0% { box-shadow: 0 0 0px #fff; }
-    50% { box-shadow: 0 0 20px #fff; }
+    50% { box-shadow: 0 0 15px #fff; }
     100% { box-shadow: 0 0 0px #fff; }
 }
 
 @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(8px); }
-    75% { transform: translateX(-8px); }
-    100% { transform: translateX(0); }
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
 }
 
-@keyframes celebrate {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .footer {
@@ -185,16 +180,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
 }
 
 .score {
     font-weight: bold;
-    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
 }
 
 .next-level button {
-    padding: 15px 30px;
+    padding: 12px 25px;
     background-color: #ffca28;
     border: none;
     font-family: 'Fredoka One', cursive;
@@ -203,20 +196,14 @@ body {
     font-weight: bold;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px #fbc02d;
-    position: relative;
-    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 4px #fbc02d;
 }
 
 .next-level button:hover {
     background-color: #ffee58;
-    transform: scale(1.1);
-}
-
-.next-level button:active {
-    box-shadow: 0 2px #fbc02d;
-    transform: translateY(4px) scale(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px #fbc02d;
 }
 
 .confetti {
@@ -236,15 +223,23 @@ body {
 
 @media (max-width: 600px) {
     .emoji-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
     
     .game-container {
-        padding: 20px;
-        margin: 10px;
+        padding: 15px;
     }
     
     .header {
         font-size: 28px;
+    }
+    
+    .emoji-item {
+        font-size: 20px;
+        padding: 8px;
+    }
+    
+    .target-emoji, .target-memory {
+        font-size: 48px;
     }
 }
