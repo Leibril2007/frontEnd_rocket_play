@@ -1,4 +1,3 @@
-//import { ventConfigNivel } from "../configuracionJuego/configuracionJuego.js";
 import { headerProf } from "../headerProfe/headerProfe.js";
 
 let pageProfesor = document.querySelector('#seccionProfesor');
@@ -30,14 +29,19 @@ function cargarJuegos(){
 
     divMemProf.addEventListener("click", function(){
 
+        let nombreJuego = "Memoria"
+        
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("true", nombreJuego);
         } else {
             this.classList.remove("colorMarcar");
-        }
+            nombreJuego = "null"
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("f", nombreJuego);
+        } 
 
-
-        /* window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html"; */
     })
 
     /* EMOJIS */
@@ -47,13 +51,19 @@ function cargarJuegos(){
     secProfesor.appendChild(divEmoProf);
     divEmoProf.addEventListener("click", function(){
 
+        let nombreJuego = "Emoji Game"
+        
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("true", nombreJuego);
         } else {
             this.classList.remove("colorMarcar");
-        }
+            nombreJuego = "null"
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("f", nombreJuego);
+        } 
 
-        //window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
     })
 
     let titEmoP =  document.createElement('h3');
@@ -69,13 +79,19 @@ function cargarJuegos(){
     secProfesor.appendChild(divSimonProf);
     divSimonProf.addEventListener("click", function(){
 
+        let nombreJuego = "Simon Dice"
+        
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("true", nombreJuego);
         } else {
             this.classList.remove("colorMarcar");
-        }
+            nombreJuego = "null"
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("f", nombreJuego);
+        } 
 
-        //window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
     })
 
     let titSimonP =  document.createElement('h3');
@@ -89,14 +105,20 @@ function cargarJuegos(){
     divMedAmP.className = "cuadro-juego div-med-am-p";
     secProfesor.appendChild(divMedAmP);
     divMedAmP.addEventListener("click", function(){
+
+        let nombreJuego = "EcoHeroes"
         
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("true", nombreJuego);
         } else {
             this.classList.remove("colorMarcar");
+            nombreJuego = "null"
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("f", nombreJuego);
         } 
-        
-        //window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
+
     })
 
     let titMedAmP =  document.createElement('h3');
@@ -111,13 +133,19 @@ function cargarJuegos(){
     secProfesor.appendChild(divjueg5p);
     divjueg5p.addEventListener("click", function(){
         
+        let nombreJuego = "Juego 5"
+        
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("true", nombreJuego);
         } else {
             this.classList.remove("colorMarcar");
+            nombreJuego = "null"
+            localStorage.setItem("nombreJuego", nombreJuego);
+            console.log("f", nombreJuego);
         } 
-        
-        //window.location.href = "../../paginas/paginasProfesor/codigoJuegoProfesor.html";
+
     })
 
     let titJueg5P =  document.createElement('h3');
@@ -143,10 +171,17 @@ function cargarJuegos(){
 
     dvNiv1.addEventListener('click', function(){
 
+        let nivSel = 1;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -158,10 +193,17 @@ function cargarJuegos(){
 
     dvNiv2.addEventListener('click', function(){
 
+        let nivSel = 2;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -173,10 +215,17 @@ function cargarJuegos(){
 
     dvNiv3.addEventListener('click', function(){
 
+        let nivSel = 3;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -188,10 +237,17 @@ function cargarJuegos(){
 
     dvNiv4.addEventListener('click', function(){
 
+        let nivSel = 4;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -203,10 +259,17 @@ function cargarJuegos(){
 
     dvNiv5.addEventListener('click', function(){
 
+        let nivSel = 5;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -217,11 +280,17 @@ function cargarJuegos(){
     dvBaseNivP.appendChild(dvNiv6);
 
     dvNiv6.addEventListener('click', function(){
+        let nivSel = 6;
 
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -233,10 +302,17 @@ function cargarJuegos(){
 
     dvNiv7.addEventListener('click', function(){
 
+        let nivSel = 7;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -248,10 +324,17 @@ function cargarJuegos(){
 
     dvNiv8.addEventListener('click', function(){
 
+        let nivSel = 8;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -263,10 +346,17 @@ function cargarJuegos(){
 
     dvNiv9.addEventListener('click', function(){
 
+        let nivSel = 9;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -278,10 +368,17 @@ function cargarJuegos(){
 
     dvNiv10.addEventListener('click', function(){
 
+        let nivSel = 10;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("nivSel", nivSel);
+            console.log("vn", nivSel);
         } else {
             this.classList.remove("colorMarcar");
+            nivSel = 0;
+            localStorage.setItem("nivSel", nivSel);
+            console.log("fn", nivSel);
         } 
         
     });
@@ -306,10 +403,17 @@ function cargarJuegos(){
 
     dvTime20P.addEventListener('click', function(){
 
+        let timeSel = 20;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("timeSel", timeSel);
+            console.log("vt", timeSel);
         } else {
             this.classList.remove("colorMarcar");
+            timeSel = 0;
+            localStorage.setItem("timeSel", timeSel);
+            console.log("ft", timeSel);
         } 
         
     });
@@ -322,10 +426,17 @@ function cargarJuegos(){
 
     dvTime30P.addEventListener('click', function(){
 
+        let timeSel = 30;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("timeSel", timeSel);
+            console.log("vt", timeSel);
         } else {
             this.classList.remove("colorMarcar");
+            timeSel = 0;
+            localStorage.setItem("timeSel", timeSel);
+            console.log("ft", timeSel);
         } 
         
     });
@@ -337,10 +448,17 @@ function cargarJuegos(){
 
     dvTime40P.addEventListener('click', function(){
 
+        let timeSel = 40;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("timeSel", timeSel);
+            console.log("vt", timeSel);
         } else {
             this.classList.remove("colorMarcar");
+            timeSel = 0;
+            localStorage.setItem("timeSel", timeSel);
+            console.log("ft", timeSel);
         } 
         
     });
@@ -352,10 +470,17 @@ function cargarJuegos(){
 
     dvTime50P.addEventListener('click', function(){
 
+        let timeSel = 50;
+
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
+            localStorage.setItem("timeSel", timeSel);
+            console.log("vt", timeSel);
         } else {
             this.classList.remove("colorMarcar");
+            timeSel = 0;
+            localStorage.setItem("timeSel", timeSel);
+            console.log("ft", timeSel);
         } 
         
     });

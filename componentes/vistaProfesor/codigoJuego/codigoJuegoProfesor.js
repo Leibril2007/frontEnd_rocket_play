@@ -1,4 +1,5 @@
 import { headerProf } from "../headerProfe/headerProfe.js";
+import { enviarCodigoJuego } from "../../conexiones/conexionesProfesor/conexionProfe.js";
 
 let codJuegoP = document.querySelector("#confJuegosP");
 codJuegoP.appendChild(headerProf());
@@ -16,25 +17,6 @@ function generarCodigoJuego() {
   return codigo;
 }
 
-// Enviar la partida al backend al inicio
-function enviarCodigoJuego(codigoRec, estRec) {
-
-  console.log("codg", codGenerado, "est", estRec);
-
-  fetch('http://localhost:3000/partidas', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ codigo: codigoRec, estado: estRec })
-  })
-    .then(response => {
-      if (!response.ok) throw new Error('Error al guardar la partida');
-      return response.json();
-    })
-    .then(data => {
-      console.log('Partida guardada:', data);
-    })
-    .catch(error => console.error('Error al enviar partida:', error));
-}
 
 // Obtener jugadores
 function obtenerJugadores(codigo) {
@@ -123,9 +105,13 @@ function cargarCodigoJuego() {
   return secCodP;
 }
 
+let nombreJuego = localStorage.getItem("nombreJuego");
+let nivSel = localStorage.getItem("nivSel");
+let timeSel = localStorage.getItem("timeSel");
+
 // Ejecuta al cargar pantalla
 codJuegoP.appendChild(cargarCodigoJuego());
-enviarCodigoJuego(codGenerado, estadoVar); // Se envía la partida automáticamente
+enviarCodigoJuego(codGenerado, estadoVar, nombreJuego, nivSel, timeSel); 
 
 // Polling para actualizar lista de jugadores cada 5 segundos
 setInterval(() => {

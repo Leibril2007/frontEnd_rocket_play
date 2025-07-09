@@ -21,7 +21,6 @@ function enviarCodigoJuego(codigoRec, estRec, nombreJuego, nivSel, timeSel){
       })
       .then(data => {
         console.log('Codigo enviado con exito:', data);
-        alert("SE ENVIÓ");
       })
       .catch(error => {
         console.error('Hubo un problema con la solicitud:', error);
