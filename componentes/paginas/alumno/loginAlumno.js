@@ -120,7 +120,7 @@ document.getElementById("btnListo").addEventListener("click", async function () 
         const response = await fetch(`http://localhost:3000/partidas/inicio?codigo=${encodeURIComponent(codigo)}`);
         const data = await response.json();
 
-        console.log("🔍 Estado recibido:", data);
+        console.log("Estado recibido:", data);
 
         if (data.success && data.estado === true) {
           clearInterval(intervalo);
@@ -132,7 +132,6 @@ document.getElementById("btnListo").addEventListener("click", async function () 
           if (dataJuego.success) {
             const juego = dataJuego.juego;
 
-            // Mapeo de nombres de juegos a rutas
             const rutasJuegos = {
               "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
               "Trivia": "/componentes/juegos/simonDice/indexTrivia.html",
@@ -142,19 +141,19 @@ document.getElementById("btnListo").addEventListener("click", async function () 
             const ruta = rutasJuegos[juego];
 
             if (ruta) {
-              console.log("🚀 Redirigiendo al juego:", ruta);
+              console.log("Redirigiendo al juego:", ruta);
               window.location.href = ruta;
             } else {
-              alert("⚠️ No se encontró la ruta del juego: " + juego);
+              alert("No se encontró la ruta del juego: " + juego);
             }
 
           } else {
-            alert("⚠️ No se pudo obtener el juego de la partida.");
+            alert("No se pudo obtener el juego de la partida.");
           }
         }
 
       } catch (error) {
-        console.error("🚨 Error al consultar estado de partida o juego:", error);
+        console.error("Error al consultar estado de partida o juego:", error);
       }
     }, 3000);
   }
