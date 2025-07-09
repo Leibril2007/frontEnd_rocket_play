@@ -86,19 +86,32 @@ function cargarCodigoJuego() {
 
   localStorage.setItem("codigoGen", codGenerado);
 
-  btnInJuegP.addEventListener('click', function () {
+
+  btnInJuegP.addEventListener('click', async function () {
     if (estadoVar === "false") {
-      estadoVar = "true";
-      fetch(`http://localhost:3000/partidasEstadoCambio/${codGenerado}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ estado: estadoVar })
-      })
-
-      alert("se cambio estado");
-
+  
+      try {
+        const response = await fetch(`http://localhost:3000/partidasEstadoCambio/${codGenerado}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ estado: "true" }) 
+        });
+  
+        const data = await response.json();
+  
+        if (data.success) {
+          alert("✅ Estado de la partida cambiado correctamente.");
+        } else {
+          alert("⚠️ No se pudo cambiar el estado: " + data.message);
+        }
+  
+      } catch (error) {
+        console.error("❌ Error en el cambio de estado:", error);
+        alert("❌ Hubo un error al intentar cambiar el estado.");
+      }
     }
   });
+
 
   secCodP.appendChild(btnInJuegP);
 
