@@ -79,7 +79,7 @@ function cargarJuegos(){
     secProfesor.appendChild(divSimonProf);
     divSimonProf.addEventListener("click", function(){
 
-        let nombreJuego = "Simon Dice"
+        let nombreJuego = "Trivia"
         
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
@@ -96,7 +96,7 @@ function cargarJuegos(){
 
     let titSimonP =  document.createElement('h3');
     titSimonP.className = "tit-jueg-p tit-simon-p";
-    titSimonP.textContent = "Simon Dice";
+    titSimonP.textContent = "Trivia";
     secProfesor.appendChild(titSimonP);
 
     /* MEDIO AMBIENTE */
@@ -106,7 +106,7 @@ function cargarJuegos(){
     secProfesor.appendChild(divMedAmP);
     divMedAmP.addEventListener("click", function(){
 
-        let nombreJuego = "EcoHeroes"
+        let nombreJuego = "EcoTrivia"
         
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
@@ -123,7 +123,7 @@ function cargarJuegos(){
 
     let titMedAmP =  document.createElement('h3');
     titMedAmP.className = "tit-jueg-p tit-med-am-p";
-    titMedAmP.textContent = "EcoHéroes";
+    titMedAmP.textContent = "EcoTrivia";
     secProfesor.appendChild(titMedAmP);
 
     /* JUEGO 5 */

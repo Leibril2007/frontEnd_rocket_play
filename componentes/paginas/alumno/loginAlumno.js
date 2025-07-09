@@ -101,17 +101,19 @@ async function enviarDatos() {
   }
 }
 
+
 document.getElementById("btnListo").addEventListener("click", async function () {
   const ok = await enviarDatos();
+
   if (ok) {
     const codigo = localStorage.getItem("codigoGen");
 
     if (!codigo) {
-      console.error("❌ No se encontró el código en localStorage.");
+      console.error("No se encontró el código en localStorage.");
       return;
     }
 
-    console.log("📦 Código obtenido:", codigo);
+    console.log("Código obtenido:", codigo);
 
     const intervalo = setInterval(async () => {
       try {
@@ -120,17 +122,41 @@ document.getElementById("btnListo").addEventListener("click", async function () 
 
         console.log("🔍 Estado recibido:", data);
 
-        // La condición corregida (estado es booleano, no string)
         if (data.success && data.estado === true) {
           clearInterval(intervalo);
-          console.log("✅ Partida iniciada, redirigiendo...");
-          window.location.href = "/componentes/juegos/simonDice/indexTrivia.html";
+          console.log("Partida iniciada, consultando juego...");
+
+          const resJuego = await fetch(`http://localhost:3000/partidas/juegoPorProfe/${codigo}`);
+          const dataJuego = await resJuego.json();
+
+          if (dataJuego.success) {
+            const juego = dataJuego.juego;
+
+            // Mapeo de nombres de juegos a rutas
+            const rutasJuegos = {
+              "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
+              "Trivia": "/componentes/juegos/simonDice/indexTrivia.html",
+              "Emoji Game": "/componentes/juegos/emojis/nivel1/nivel1.html"
+            };
+
+            const ruta = rutasJuegos[juego];
+
+            if (ruta) {
+              console.log("🚀 Redirigiendo al juego:", ruta);
+              window.location.href = ruta;
+            } else {
+              alert("⚠️ No se encontró la ruta del juego: " + juego);
+            }
+
+          } else {
+            alert("⚠️ No se pudo obtener el juego de la partida.");
+          }
         }
+
       } catch (error) {
-        console.error("🚨 Error al consultar estado de partida:", error);
+        console.error("🚨 Error al consultar estado de partida o juego:", error);
       }
     }, 3000);
   }
 });
-
 
