@@ -42,15 +42,21 @@ function mostrarJugadores(jugadores) {
   baseCadJug.innerHTML = "";
 
   jugadores.forEach((jugador, index) => {
+
+    let baseJug = document.createElement('div');
+    baseJug.className = "base-jug";
+
     let pNomUsuarioP = document.createElement('p');
     pNomUsuarioP.className = "p-nom-usuario-p";
     pNomUsuarioP.textContent = `${index + 1}. ${jugador.name}`;
-    baseCadJug.appendChild(pNomUsuarioP);
+    baseJug.appendChild(pNomUsuarioP);
 
     let avUsuP = document.createElement('span');
     avUsuP.className = "av-usu-p";
     avUsuP.textContent = jugador.avatar;
-    baseCadJug.appendChild(avUsuP);
+    baseJug.appendChild(avUsuP);
+
+    baseCadJug.appendChild(baseJug);
   });
 }
 
@@ -61,7 +67,7 @@ function cargarCodigoJuego() {
 
   let prtCreadaP = document.createElement('h2');
   prtCreadaP.className = "prt-creada-p";
-  prtCreadaP.textContent = "Partida Creada";
+  prtCreadaP.textContent = "¡Partida Creada!";
   secCodP.appendChild(prtCreadaP);
 
   codGenerado = generarCodigoJuego();

@@ -24,7 +24,7 @@ function cargarJuegos(){
 
     let titMemP =  document.createElement('h3');
     titMemP.className = "tit-jueg-p tit-mem-p";
-    titMemP.textContent = "Space Card";
+    titMemP.textContent = "Laberinto";
     secProfesor.appendChild(titMemP);
 
     divMemProf.addEventListener("click", function(){
