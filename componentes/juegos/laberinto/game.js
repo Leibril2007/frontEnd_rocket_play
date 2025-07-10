@@ -219,7 +219,7 @@ function checkVictory() {
 }
 
 function guardarResultado(nivel, movimientos, tiempo) {
-  fetch("http://localhost:3000/laberinto/guardar", {
+  fetch("https://backend-rocket-k6wn.onrender.com/laberinto/guardar", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nivel, movimientos, tiempo })

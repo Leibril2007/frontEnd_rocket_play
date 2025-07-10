@@ -60,7 +60,7 @@ async function enviarDatos() {
   }
 
   try {
-    const resPlayer = await fetch("http://localhost:3000/players", {
+    const resPlayer = await fetch("https://backend-rocket-k6wn.onrender.com/players", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ usuario, avatar }),
@@ -74,7 +74,7 @@ async function enviarDatos() {
     const dataPlayer = await resPlayer.json();
     const id_player = dataPlayer.id;
 
-    const resJugadoresPartida = await fetch("http://localhost:3000/jugadores_partida", {
+    const resJugadoresPartida = await fetch("https://backend-rocket-k6wn.onrender.com/jugadores_partida", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id_player, codigo_partida: codigo }),
@@ -117,7 +117,7 @@ document.getElementById("btnListo").addEventListener("click", async function () 
 
     const intervalo = setInterval(async () => {
       try {
-        const response = await fetch(`http://localhost:3000/partidas/inicio?codigo=${encodeURIComponent(codigo)}`);
+        const response = await fetch(`https://backend-rocket-k6wn.onrender.com/partidas/inicio?codigo=${encodeURIComponent(codigo)}`);
         const data = await response.json();
 
         console.log("Estado recibido:", data);
@@ -126,7 +126,7 @@ document.getElementById("btnListo").addEventListener("click", async function () 
           clearInterval(intervalo);
           console.log("Partida iniciada, consultando juego...");
 
-          const resJuego = await fetch(`http://localhost:3000/partidas/juegoPorProfe/${codigo}`);
+          const resJuego = await fetch(`https://backend-rocket-k6wn.onrender.com/partidas/juegoPorProfe/${codigo}`);
           const dataJuego = await resJuego.json();
 
           if (dataJuego.success) {
