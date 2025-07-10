@@ -155,7 +155,25 @@ function cargarJuegos(){
 
 
     /*-------------------- NIVELES -------------------- */
-    let titNivP =  document.createElement('h2');
+
+    let nivelesSeleccionados = [];
+
+    function toggleNivel(nivel, elemento) {
+        const index = nivelesSeleccionados.indexOf(nivel);
+
+        if (index === -1) {
+            nivelesSeleccionados.push(nivel);
+            elemento.classList.add("colorMarcar");
+        } else {
+            nivelesSeleccionados.splice(index, 1);
+            elemento.classList.remove("colorMarcar");
+        }
+
+        localStorage.setItem("nivSel", nivelesSeleccionados.join(","));
+        console.log("niveles actuales:", nivelesSeleccionados);
+    }
+
+    let titNivP = document.createElement('h2');
     titNivP.className = "tit-time-p tit-niv-p";
     titNivP.textContent = "Selecciona el nivel";
     secProfesor.appendChild(titNivP);
@@ -163,227 +181,24 @@ function cargarJuegos(){
     let dvBaseNivP = document.createElement('div');
     dvBaseNivP.className = "dv-base-time-ps";
 
+    function crearBotonNivel(nivel) {
+        let divNivel = document.createElement('div');
+        divNivel.className = `dv-niv niv${nivel}`;
+        divNivel.textContent = `Nivel ${nivel}`;
 
-    let dvNiv1 =  document.createElement('div');
-    dvNiv1.className = "dv-niv niv1";
-    dvNiv1.textContent = "Nivel 1";
-    dvBaseNivP.appendChild(dvNiv1);
+        divNivel.addEventListener('click', function() {
+            toggleNivel(nivel, this);
+        });
 
-    dvNiv1.addEventListener('click', function(){
+        dvBaseNivP.appendChild(divNivel);
+    }
 
-        let nivSel = 1;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv2 =  document.createElement('div');
-    dvNiv2.className = "dv-niv niv2";
-    dvNiv2.textContent = "Nivel 2";
-    dvBaseNivP.appendChild(dvNiv2);
-
-    dvNiv2.addEventListener('click', function(){
-
-        let nivSel = 2;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv3 =  document.createElement('div');
-    dvNiv3.className = "dv-niv niv3";
-    dvNiv3.textContent = "Nivel 3";
-    dvBaseNivP.appendChild(dvNiv3);
-
-    dvNiv3.addEventListener('click', function(){
-
-        let nivSel = 3;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv4 =  document.createElement('div');
-    dvNiv4.className = "dv-niv niv4";
-    dvNiv4.textContent = "Nivel 4";
-    dvBaseNivP.appendChild(dvNiv4);
-
-    dvNiv4.addEventListener('click', function(){
-
-        let nivSel = 4;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv5 =  document.createElement('div');
-    dvNiv5.className = "dv-niv niv5";
-    dvNiv5.textContent = "Nivel 5";
-    dvBaseNivP.appendChild(dvNiv5);
-
-    dvNiv5.addEventListener('click', function(){
-
-        let nivSel = 5;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv6 =  document.createElement('div');
-    dvNiv6.className = "dv-niv niv6";
-    dvNiv6.textContent = "Nivel 6";
-    dvBaseNivP.appendChild(dvNiv6);
-
-    dvNiv6.addEventListener('click', function(){
-        let nivSel = 6;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv7 =  document.createElement('div');
-    dvNiv7.className = "dv-niv niv7";
-    dvNiv7.textContent = "Nivel 7";
-    dvBaseNivP.appendChild(dvNiv7);
-
-    dvNiv7.addEventListener('click', function(){
-
-        let nivSel = 7;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv8 =  document.createElement('div');
-    dvNiv8.className = "dv-niv niv8";
-    dvNiv8.textContent = "Nivel 8";
-    dvBaseNivP.appendChild(dvNiv8);
-
-    dvNiv8.addEventListener('click', function(){
-
-        let nivSel = 8;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv9 =  document.createElement('div');
-    dvNiv9.className = "dv-niv niv9";
-    dvNiv9.textContent = "Nivel 9";
-    dvBaseNivP.appendChild(dvNiv9);
-
-    dvNiv9.addEventListener('click', function(){
-
-        let nivSel = 9;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
-
-    let dvNiv10 =  document.createElement('div');
-    dvNiv10.className = "dv-niv niv10";
-    dvNiv10.textContent = "Nivel 10";
-    dvBaseNivP.appendChild(dvNiv10);
-
-    dvNiv10.addEventListener('click', function(){
-
-        let nivSel = 10;
-
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nivSel", nivSel);
-            console.log("vn", nivSel);
-        } else {
-            this.classList.remove("colorMarcar");
-            nivSel = 0;
-            localStorage.setItem("nivSel", nivSel);
-            console.log("fn", nivSel);
-        } 
-        
-    });
+    for (let i = 1; i <= 10; i++) {
+        crearBotonNivel(i);
+    }
 
     secProfesor.appendChild(dvBaseNivP);
+
 
 
     /*-------------------- TIEMPO -------------------- */

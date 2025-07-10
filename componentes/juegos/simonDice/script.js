@@ -1,5 +1,6 @@
-let nivel = 1;
-let preguntaActual = 0;
+let nivelesSeleccionados = localStorage.getItem("nivSel")?.split(",").map(n => parseInt(n)) || [1];
+
+let indiceNivelActual = 0;
 let preguntasPorNivel = 1;
 let puntaje = 0;
 let vidas = 3;
@@ -40,13 +41,14 @@ const preguntas = [
   { pregunta: "¿Qué color resulta al mezclar azul y amarillo?", opciones: ["Verde", "Naranja", "Rojo", "Violeta"], correcta: 0 },
   { pregunta: "¿Qué se usa para medir temperatura?", opciones: ["Regla", "Balanza", "Termómetro", "Cronómetro"], correcta: 2 }
 ];
-
 let disponibles = [...preguntas];
 
 function cargarPregunta() {
   if (preguntasJugadas >= preguntasPorNivel || vidas <= 0 || disponibles.length === 0) {
     if (vidas <= 0 || disponibles.length === 0) {
       mostrarResultados(true);
+    } else if (indiceNivelActual >= nivelesSeleccionados.length - 1) {
+      mostrarResultados(false);
     } else {
       pasarDeNivel();
     }
@@ -57,8 +59,9 @@ function cargarPregunta() {
   const pregunta = disponibles.splice(index, 1)[0];
 
   totalPreguntas++;
+  const nivelActual = nivelesSeleccionados[indiceNivelActual];
   document.getElementById("pregunta").textContent = pregunta.pregunta;
-  document.getElementById("nivel").textContent = nivel;
+  document.getElementById("nivel").textContent = nivelActual;
 
   const opcionesContainer = document.getElementById("opciones");
   opcionesContainer.innerHTML = "";
@@ -69,8 +72,11 @@ function cargarPregunta() {
     opcionesContainer.appendChild(btn);
   });
 
-  tiempo = Math.max(10 - nivel + 1, 5);
-  document.getElementById("tiempo").textContent = tiempo;
+  let tiempoBase = parseInt(localStorage.getItem("timeSel"));
+  if (!tiempoBase || tiempoBase <= 0) tiempoBase = 20; 
+  tiempo = tiempoBase;
+  document.getElementById("tiempo").textContent = tiempo;  
+  
   clearInterval(temporizador);
   temporizador = setInterval(() => {
     tiempo--;
@@ -107,7 +113,7 @@ function perderVida() {
 }
 
 function pasarDeNivel() {
-  nivel++;
+  indiceNivelActual++;
   preguntasPorNivel++;
   preguntasJugadas = 0;
   cargarPregunta();
@@ -117,10 +123,13 @@ function mostrarResultados(perdio = false) {
   clearInterval(temporizador);
   document.getElementById("gameTab").classList.remove("active");
   document.getElementById("resultTab").classList.add("active");
+  
+  const nivelAlcanzado = nivelesSeleccionados[indiceNivelActual] || nivelesSeleccionados[nivelesSeleccionados.length-1];
+
   document.getElementById("tituloResultado").textContent = perdio ? "😞 Has perdido" : "🎉 ¡Juego completado!";
 
   const mensaje = `
-    <p>Nivel alcanzado: ${nivel}</p>
+    <p>Nivel alcanzado: ${nivelAlcanzado}</p>
     <p>Puntaje final: ${puntaje} pts</p>
     <p>Preguntas jugadas: ${totalPreguntas}</p>
     <p>Vidas restantes: ${vidas}</p>
@@ -129,20 +138,11 @@ function mostrarResultados(perdio = false) {
   `;
   document.getElementById("resultados").innerHTML = mensaje;
 
-  console.log("🚀 Enviando resultado al backend:");
-console.log({
-  nivel,
-  puntaje,
-  preguntas_jugadas: totalPreguntas,
-  vidas_restantes: vidas
-});
-
-
   fetch('http://localhost:3000/api/resultadosDania', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      nivel,
+      nivel: nivelAlcanzado,
       puntaje,
       preguntas_jugadas: totalPreguntas,
       vidas_restantes: vidas
@@ -151,14 +151,14 @@ console.log({
   .then(res => res.json())
   .then(data => console.log('✅ Resultado guardado:', data))
   .catch(err => console.error('❌ Error al guardar resultado:', err));
-  
 }
 
 function descargarResultados() {
+  const nivelAlcanzado = nivelesSeleccionados[indiceNivelActual] || nivelesSeleccionados[nivelesSeleccionados.length-1];
   const texto = `
 Trivia Espacial - Resultados Finales
 -------------------------------------
-Nivel alcanzado: ${nivel}
+Nivel alcanzado: ${nivelAlcanzado}
 Puntaje final: ${puntaje} pts
 Preguntas jugadas: ${totalPreguntas}
 Vidas restantes: ${vidas}

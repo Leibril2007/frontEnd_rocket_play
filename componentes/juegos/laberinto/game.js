@@ -2,7 +2,12 @@ const mazeContainer = document.getElementById("mazeContainer");
 const info = document.getElementById("info");
 const nivelLabel = document.getElementById("nivelLabel");
 
-let level = 1;
+let timerInterval;
+
+let nivelesSeleccionados = localStorage.getItem("nivSel")?.split(",").map(n => parseInt(n)) || [1];
+let nivelActualIndex = 0;
+let level = nivelesSeleccionados[nivelActualIndex];
+
 let playerPos = { x: 0, y: 0 };
 let totalMoves = 0;
 let startTime = Date.now();
@@ -80,10 +85,50 @@ const mazes = [
   ]
 ];
 
+// Leer el tiempo seleccionado desde localStorage y parsear a entero
+let timeSel = parseInt(localStorage.getItem("timeSel"));
+let tiempoTotal = 0;
+
 function renderMaze(level) {
-  const maze = mazes[level - 1];
+  const maze = mazes[level - 1]; 
   mazeContainer.innerHTML = "";
   mazeContainer.style.gridTemplateColumns = `repeat(${maze[0].length}, 40px)`;
+
+  playerPos = { x: 0, y: 0 };
+  totalMoves = 0;
+
+  clearInterval(timerInterval);
+
+  if (timeSel && !isNaN(timeSel) && timeSel > 0) {
+    // Cuenta regresiva
+    let timeLeft = timeSel;
+    document.getElementById("tiempo").textContent = `⏱️ Tiempo restante: ${timeLeft}s`;
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      document.getElementById("tiempo").textContent = `⏱️ Tiempo restante: ${timeLeft}s`;
+
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        info.textContent = `⏳ Se acabó el tiempo para el nivel ${level}. Inténtalo de nuevo.`;
+
+        setTimeout(() => {
+          info.textContent = "";
+          renderMaze(level);
+        }, 3000);
+      }
+    }, 1000);
+    startTime = Date.now() - (timeSel * 1000 - timeLeft * 1000); // Para medir tiempo transcurrido si quieres usarlo después
+  } else {
+    // Cuenta normal hacia arriba
+    startTime = Date.now();
+    document.getElementById("tiempo").textContent = "⏱️ Tiempo: 0s";
+
+    timerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById("tiempo").textContent = `⏱️ Tiempo: ${elapsed}s`;
+    }, 1000);
+  }
 
   for (let y = 0; y < maze.length; y++) {
     for (let x = 0; x < maze[y].length; x++) {
@@ -92,13 +137,7 @@ function renderMaze(level) {
       if (maze[y][x] === 1) cell.classList.add("wall");
       else cell.classList.add("path");
 
-      if (x === 0 && y === 0) {
-        cell.classList.add("start");
-        playerPos = { x, y };
-        totalMoves = 0;
-        startTime = Date.now();
-      }
-
+      if (x === 0 && y === 0) cell.classList.add("start");
       if (x === maze[y].length - 1 && y === maze.length - 1) {
         cell.classList.add("end");
         cell.textContent = "SALIDA";
@@ -148,19 +187,33 @@ function checkVictory() {
     playerPos.x === maze[0].length - 1 &&
     playerPos.y === maze.length - 1
   ) {
-    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    clearInterval(timerInterval);
+
+    let elapsedTime;
+    if (timeSel && !isNaN(timeSel) && timeSel > 0) {
+      // Si usas cuenta regresiva
+      // calcular tiempo usado como tiempoSel - tiempo restante mostrado
+      const tiempoMostrado = parseInt(document.getElementById("tiempo").textContent.replace(/\D/g, ''));
+      elapsedTime = timeSel - tiempoMostrado;
+    } else {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    }
+
+    tiempoTotal += elapsedTime;
+
     guardarResultado(level, totalMoves, elapsedTime);
 
     info.textContent = `¡Nivel ${level} completado!`;
 
-    level++;
-    if (level <= mazes.length) {
+    nivelActualIndex++;
+    if (nivelActualIndex < nivelesSeleccionados.length) {
+      level = nivelesSeleccionados[nivelActualIndex];
       setTimeout(() => {
         info.textContent = "";
         renderMaze(level);
       }, 1000);
     } else {
-      info.textContent = "🎉 ¡Todos los niveles completados!";
+      info.textContent = `🎉 ¡Todos los niveles completados! Tiempo total: ${tiempoTotal}s`;
     }
   }
 }
