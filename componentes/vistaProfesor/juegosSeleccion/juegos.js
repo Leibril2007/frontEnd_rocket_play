@@ -29,7 +29,7 @@ function cargarJuegos(){
 
     divMemProf.addEventListener("click", function(){
 
-        let nombreJuego = "Memoria"
+        let nombreJuego = "Laberinto"
         
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
