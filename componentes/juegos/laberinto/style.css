@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(to right, #ffebf0, #e0f7fa);
+  margin: 0;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #444;
+}
+
+/* Contenedor del laberinto */
+#mazeContainer {
+  display: grid;
+  gap: 12px; /* separación visible entre celdas */
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+}
+
+/* Celdas del laberinto */
+.cell {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Caminos libres */
+.path {
+  background-color: #e1f5fe;
+}
+
+/* Paredes del laberinto */
+.wall {
+  background-color: #ce93d8;
+}
+
+/* Celda de inicio */
+.start {
+  background-color: #c8e6c9;
+}
+
+/* Celda final */
+.end {
+  background-color: #ffe082;
+}
+
+/* Personaje lindo */
+.player {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/188/188987.png');
+  background-size: cover;
+  background-position: center;
+  animation: saltito 0.5s infinite alternate;
+}
+
+/* Animación de salto */
+@keyframes saltito {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+/* Nivel actual */
+#nivelLabel {
+  font-size: 24px;
+  background-color: #fffde7;
+  padding: 12px 25px;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(255, 241, 118, 0.4);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Mensajes de nivel completado */
+#info {
+  font-size: 20px;
+  margin-top: 10px;
+  color: #ec407a;
+  font-weight: 600;
+}
+
