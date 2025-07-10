@@ -56,7 +56,7 @@
     grid-column: 1/2;
     grid-row: 2/3;
 
-    background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/cartas.png?raw=true');
+    background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/laberinto.png?raw=true');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -85,7 +85,7 @@
     grid-column: 3/4;
     grid-row: 2/3;
 
-    background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/simon%20dice%20log.png?raw=true');
+    background-image: url('https://github.com/Leibril2007/img_rocketPlay/blob/main/trivia.png?raw=true');
     background-repeat: no-repeat;
     background-size: cover;
 }
