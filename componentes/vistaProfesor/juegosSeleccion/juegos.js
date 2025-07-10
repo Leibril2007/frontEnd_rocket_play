@@ -126,33 +126,6 @@ function cargarJuegos(){
     titMedAmP.textContent = "EcoTrivia";
     secProfesor.appendChild(titMedAmP);
 
-    /* JUEGO 5 */
-
-    let divjueg5p = document.createElement('div');
-    divjueg5p.className = "cuadro-juego div-jueg-5";
-    secProfesor.appendChild(divjueg5p);
-    divjueg5p.addEventListener("click", function(){
-        
-        let nombreJuego = "Juego 5"
-        
-        if(!this.classList.contains("colorMarcar")){
-            this.classList.add("colorMarcar");
-            localStorage.setItem("nombreJuego", nombreJuego);
-            console.log("true", nombreJuego);
-        } else {
-            this.classList.remove("colorMarcar");
-            nombreJuego = "null"
-            localStorage.setItem("nombreJuego", nombreJuego);
-            console.log("f", nombreJuego);
-        } 
-
-    })
-
-    let titJueg5P =  document.createElement('h3');
-    titJueg5P.className = "tit-jueg-p tit-jueg-5";
-    titJueg5P.textContent = "Juego 5";
-    secProfesor.appendChild(titJueg5P);
-
 
     /*-------------------- NIVELES -------------------- */
 
@@ -213,12 +186,12 @@ function cargarJuegos(){
 
     let dvTime20P =  document.createElement('div');
     dvTime20P.className = "dv-time veints";
-    dvTime20P.textContent = "20s";
+    dvTime20P.textContent = "10s";
     dvBaseTimeP.appendChild(dvTime20P);
 
     dvTime20P.addEventListener('click', function(){
 
-        let timeSel = 20;
+        let timeSel = 10;
 
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
@@ -280,12 +253,12 @@ function cargarJuegos(){
 
     let dvTime50P =  document.createElement('div');
     dvTime50P.className = "dv-time cinc";
-    dvTime50P.textContent = "50s";
+    dvTime50P.textContent = "20s";
     dvBaseTimeP.appendChild(dvTime50P);
 
     dvTime50P.addEventListener('click', function(){
 
-        let timeSel = 50;
+        let timeSel = 20;
 
         if(!this.classList.contains("colorMarcar")){
             this.classList.add("colorMarcar");
