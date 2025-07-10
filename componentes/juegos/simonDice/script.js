@@ -138,7 +138,7 @@ function mostrarResultados(perdio = false) {
   `;
   document.getElementById("resultados").innerHTML = mensaje;
 
-  fetch('http://localhost:3000/api/resultadosDania', {
+  fetch('https://backend-rocket-k6wn.onrender.com/api/resultadosDania', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

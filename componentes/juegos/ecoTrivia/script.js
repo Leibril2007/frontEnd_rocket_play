@@ -65,7 +65,7 @@ function mostrarPregunta() {
       document.getElementById("feedback").textContent = `Tu puntaje final fue: ${puntos} / ${preguntasJugadas}`;
       document.getElementById("tiempo").textContent = "";
 
-      fetch('http://localhost:3000/api/resultados', {
+      fetch('https://backend-rocket-k6wn.onrender.com/api/resultados', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,6 +1,6 @@
 function enviarCodigoJuego(codigoRec, estRec, nombreJuego, nivSel, timeSel){
 
-    fetch('http://localhost:3000/partidas', {
+    fetch('https://backend-rocket-k6wn.onrender.com/partidas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -20,7 +20,7 @@ function generarCodigoJuego() {
 
 // Obtener jugadores
 function obtenerJugadores(codigo) {
-  fetch(`http://localhost:3000/jugadores_partida/${codigo}`)
+  fetch(`https://backend-rocket-k6wn.onrender.com/jugadores_partida/${codigo}`)
     .then(response => {
       if (!response.ok) throw new Error('No se pudo obtener jugadores');
       return response.json();
@@ -97,7 +97,7 @@ function cargarCodigoJuego() {
     if (estadoVar === "false") {
   
       try {
-        const response = await fetch(`http://localhost:3000/partidasEstadoCambio/${codGenerado}`, {
+        const response = await fetch(`https://backend-rocket-k6wn.onrender.com/partidasEstadoCambio/${codGenerado}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ estado: "true" }) 
