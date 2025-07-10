@@ -138,7 +138,7 @@ console.log({
 });
 
 
-  fetch('http://localhost:3000/resultados', {
+  fetch('http://localhost:3000/api/resultadosDania', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
