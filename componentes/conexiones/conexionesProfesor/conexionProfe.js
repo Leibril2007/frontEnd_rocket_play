@@ -9,7 +9,7 @@ function enviarCodigoJuego(codigoRec, estRec, nombreJuego, nivSel, timeSel){
             codigo: codigoRec,
             estado: estRec,
             juego: nombreJuego,
-            nivel: nivSel,
+            niveles: nivSel,
             tiempo: timeSel
         })
       })
