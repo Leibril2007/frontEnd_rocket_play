@@ -149,3 +149,64 @@ button:hover {
 .tab.active {
   display: block;
 }
+@media screen and (max-width: 430px) {
+  body {
+    padding: 1rem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .container {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  #pregunta {
+    font-size: 18px;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+
+  .options-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .options-container button {
+    font-size: 16px;
+    padding: 16px 20px;
+    padding-left: 55px;
+  }
+
+  .options-container button::before {
+    font-size: 14px;
+    padding: 4px 10px;
+    left: 16px;
+  }
+
+  .game-info {
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  #resultados {
+    font-size: 16px;
+    padding: 20px;
+    margin-top: 25px;
+  }
+
+  button {
+    font-size: 15px;
+    padding: 12px 20px;
+    margin-top: 20px;
+  }
+}
