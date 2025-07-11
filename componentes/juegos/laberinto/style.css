@@ -82,6 +82,11 @@ body {
   color: #ec407a;
   font-weight: 600;
 }
+
+.trap {
+  background-color: #ff4d4d; /* rojo */
+  border: 2px solid darkred;
+
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
 body {
@@ -93,6 +98,7 @@ body {
   flex-direction: column;
   align-items: center;
   color: #444;
+
 }
 
 /* Contenedor del laberinto */

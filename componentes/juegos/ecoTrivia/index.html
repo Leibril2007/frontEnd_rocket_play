@@ -4,23 +4,32 @@
   <meta charset="UTF-8">
   <title>EcoTrivia</title>
   <link rel="stylesheet" href="style.css">
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>🌿 EcoTrivia</h1>
-    
-    <!-- ⏱️ Tiempo restante -->
-    <div id="tiempo" class="tiempo">⏱️ 20 segundos</div>
-    
-    <div class="nivel" id="nivelLabel"></div>
-    <div class="question" id="question"></div>
-    <div class="buttons" id="buttons">
-      <button class="true" onclick="answer(true)">✅ Verdadero</button>
-      <button class="false" onclick="answer(false)">❌ Falso</button>
-    </div>
-    <div class="feedback" id="feedback"></div>
-    <div class="score" id="score">🌟 Puntos: 0</div>
+  <h1>🌱 EcoTrivia</h1>
+  
+  <div id="game-container">
+      <div id="nivelLabel"></div>
+      <div id="question"></div>
+      <div id="feedback"></div>
+      <div id="buttons">
+          <button class="true" onclick="answer(true)">Verdadero</button>
+          <button class="false" onclick="answer(false)">Falso</button>
+      </div>
+      <div id="tiempo"></div>
+      <div id="lives">Vidas: <span id="heart-container"></span></div>
+      <div id="score">Puntos: 0</div>
   </div>
+  
+  <div id="result-screen">
+      <h2>🎊 Resultados Finales</h2>
+      <div id="final-stats"></div>
+      <button id="download-btn" onclick="downloadResults()">📥 Descargar Resultados</button>
+      <button id="restart-btn" onclick="restartGame()">🔄 Jugar de nuevo</button>
+  </div>
+  
 
   <script src="script.js"></script>
 </body>
