@@ -77,3 +77,63 @@
 .btn-prof-prin{
     background-color: #5C55DF;
 }
+/* Adaptación para iPhone 13 y móviles en general */
+@media screen and (max-width: 430px) {
+    #principal {
+      background-position: center;
+    }
+  
+    .sec-principal {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      row-gap: 2rem;
+      column-gap: 0;
+      padding: 2rem;
+    }
+  
+    .base-tit-log-prin {
+      grid-column: 1/2;
+      grid-row: 1/2;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 0;
+    }
+  
+    .d-img-l-prin {
+      max-width: 10rem;
+      height: 10rem;
+    }
+  
+    .tit-r-p-prin {
+      font-size: 6rem;
+      text-align: center;
+    }
+  
+    .preg-prin {
+      grid-column: 1/2;
+      grid-row: 2/3;
+      font-size: 3rem;
+      text-align: center;
+    }
+  
+    .btn-prin-gen {
+      max-width: 100%;
+      height: 10rem;
+      font-size: 4rem;
+      margin: 0 auto;
+      border-radius: 1rem;
+    }
+  
+    .btn-alum-prin {
+      grid-row: 3/4;
+      grid-column: 1/2;
+      justify-self: center;
+    }
+  
+    .btn-prof-prin {
+      grid-row: 4/5;
+      grid-column: 1/2;
+      justify-self: center;
+    }
+  }
+  

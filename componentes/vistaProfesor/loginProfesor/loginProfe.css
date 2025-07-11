@@ -137,3 +137,63 @@
     color: red;
     align-self: self-start;
 }
+/* Adaptación responsive para iPhone 13 y móviles */
+@media screen and (max-width: 430px) {
+    #loginProfe {
+      background-position: center;
+      padding: 1rem;
+    }
+  
+    .sec-log-prof {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      height: auto;
+      row-gap: 2rem;
+    }
+  
+    .d-img-l-prof {
+      display: none; /* Oculta la imagen grande del logo para más espacio */
+    }
+  
+    .bnv-prof {
+      font-size: 5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+  
+    .dv-base-form-l {
+      max-width: 100%;
+      width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+      border-radius: 1rem;
+  
+      grid-template-rows: repeat(7, auto);
+      row-gap: 1rem;
+    }
+  
+    .tit-gen-prof {
+      font-size: 3rem;
+      text-align: center;
+    }
+  
+    .inp-prof {
+      font-size: 2rem;
+      height: 4rem;
+    }
+  
+    .di-ing-p-log {
+      max-width: 100%;
+      height: 5rem;
+      font-size: 3rem;
+    }
+  
+    .error {
+      font-size: 1.8rem;
+      text-align: center;
+    }
+  }
+  
