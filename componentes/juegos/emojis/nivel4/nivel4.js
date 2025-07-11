@@ -18,8 +18,8 @@ const nextLevelBtn = document.getElementById('next-level');
 const config = {
     gridSize: 6,        // 6x6 = 36 emojis
     targetScore: 10,    // 10 aciertos para ganar
-    timeLimit: 45,      // 45 segundos
-    totalLives: 3       // 3 vidas
+    timeLimit: 20,      // 45 segundos
+    totalLives: 1       // 3 vidas
 };
 
 // Estado del juego
