@@ -82,4 +82,8 @@ body {
   color: #ec407a;
   font-weight: 600;
 }
+.trap {
+  background-color: #ff4d4d; /* rojo */
+  border: 2px solid darkred;
+}
 
