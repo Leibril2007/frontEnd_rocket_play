@@ -239,3 +239,76 @@
     background: linear-gradient(90deg, #5C55DF, #8A7FFF);
     background: linear-gradient(90deg, #5C55DF, #8A7FFF);
 }
+@media screen and (max-width: 430px) {
+    #seccionProfesor {
+      grid-template-rows: auto auto;
+      background-position: center;
+      padding: 1rem;
+    }
+  
+    .sec-profesor {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: auto;
+      gap: 1rem;
+      padding: 1rem;
+    }
+  
+    .tit-sec-jueg-prof,
+    .tit-time-p {
+      grid-column: 1/3;
+      font-size: 3.5rem;
+      text-align: center;
+    }
+  
+    .cuadro-juego,
+    .div-mem-prof,
+    .div-emo-prof,
+    .div-simon-prof,
+    .div-med-am-p,
+    .div-jueg-5 {
+      height: 10rem;
+      max-width: 100%;
+      border-radius: 0.5rem;
+    }
+  
+    .tit-jueg-p,
+    .tit-mem-p,
+    .tit-emo-p,
+    .tit-simon-p,
+    .tit-med-am-p,
+    .tit-jueg-5 {
+      font-size: 2.2rem;
+      text-align: center;
+      grid-column: span 1;
+    }
+  
+    .dv-base-time-ps {
+      grid-column: 1/3;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+  
+    .dv-time {
+      width: 45%;
+      height: 3.2rem;
+      font-size: 2.2rem;
+    }
+  
+    .btn-crear-p {
+      grid-column: 1/3;
+      width: 70%;
+      height: 4rem;
+      font-size: 2.8rem;
+      margin: 0 auto;
+    }
+  
+    .dv-niv {
+      width: 45%;
+      height: 4rem;
+      font-size: 2.2rem;
+    }
+  }
+  

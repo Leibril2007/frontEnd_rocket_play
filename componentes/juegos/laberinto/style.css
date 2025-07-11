@@ -82,4 +82,99 @@ body {
   color: #ec407a;
   font-weight: 600;
 }
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(to right, #ffebf0, #e0f7fa);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #444;
+}
+
+/* Contenedor del laberinto */
+#mazeContainer {
+  display: grid;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 20px;
+  background-color: #f8f8f8;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Celdas del laberinto */
+.cell {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.path {
+  background-color: #e1f5fe;
+}
+.wall {
+  background-color: #ce93d8;
+}
+.start {
+  background-color: #c8e6c9;
+}
+.end {
+  background-color: #ffe082;
+}
+.player {
+  background-image: url('https://cdn-icons-png.flaticon.com/512/188/188987.png');
+  background-size: cover;
+  background-position: center;
+  animation: saltito 0.5s infinite alternate;
+}
+@keyframes saltito {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+#nivelLabel {
+  font-size: 22px;
+  background-color: #fffde7;
+  padding: 10px 20px;
+  border-radius: 14px;
+  box-shadow: 0 3px 8px rgba(255, 241, 118, 0.3);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+#info {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #ec407a;
+  font-weight: 600;
+}
+
+/* 🔄 Responsivo para iPhone 13 */
+@media (max-width: 430px) {
+  body {
+    padding: 10px;
+  }
+
+  #mazeContainer {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .cell {
+    width: 45px;
+    height: 45px;
+  }
+
+  #nivelLabel {
+    font-size: 20px;
+    padding: 8px 16px;
+  }
+
+  #info {
+    font-size: 16px;
+  }
+}
