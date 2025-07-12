@@ -1,4 +1,40 @@
-let nivelesSeleccionados = localStorage.getItem("nivSel")?.split(",").map(n => parseInt(n)) || [1];
+let nivelesSeleccionados = [];
+const nivelesRaw = localStorage.getItem("nivelesBd");
+
+if (nivelesRaw) {
+  try {
+    let arr;
+    if (nivelesRaw.startsWith("[")) {
+      arr = JSON.parse(nivelesRaw);
+    } else {
+      arr = nivelesRaw.split(',').map(n => {
+        const num = parseInt(n.trim());
+        return isNaN(num) ? 1 : Math.max(1, Math.min(num, 10)); // Asegura que esté entre 1 y 10
+      });
+    }
+    nivelesSeleccionados = [...new Set(arr.filter(n => !isNaN(n) && n > 0 && n <= 10))]; // Elimina duplicados
+    if (nivelesSeleccionados.length === 0) nivelesSeleccionados = [1];
+  } catch (e) {
+    console.warn("Error al leer nivelesBd", e);
+    nivelesSeleccionados = [1];
+  }
+} else {
+  nivelesSeleccionados = [1];
+}
+
+// Obtener tiempo de localStorage
+let tiempoBase = 20; // Valor por defecto
+const tiempoRaw = localStorage.getItem("tiempoBd");
+if (tiempoRaw) {
+  try {
+    const tiempoConfig = parseInt(JSON.parse(tiempoRaw));
+    if (!isNaN(tiempoConfig) && tiempoConfig > 0) {
+      tiempoBase = tiempoConfig;
+    }
+  } catch (e) {
+    console.warn("Error al leer tiempoBd", e);
+  }
+}
 
 let indiceNivelActual = 0;
 let preguntasPorNivel = 1;
@@ -72,9 +108,7 @@ function cargarPregunta() {
     opcionesContainer.appendChild(btn);
   });
 
-  let tiempoBase = parseInt(localStorage.getItem("timeSel"));
-  if (!tiempoBase || tiempoBase <= 0) tiempoBase = 20; 
-  tiempo = tiempoBase;
+  tiempo = tiempoBase; // Usamos el valor configurado
   document.getElementById("tiempo").textContent = tiempo;  
   
   clearInterval(temporizador);
