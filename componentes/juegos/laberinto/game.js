@@ -1,12 +1,57 @@
+
 const mazeContainer = document.getElementById("mazeContainer");
 const info = document.getElementById("info");
 const nivelLabel = document.getElementById("nivelLabel");
 
 let timerInterval;
 
-let nivelesSeleccionados = localStorage.getItem("nivSel")?.split(",").map(n => parseInt(n)) || [1];
+// Obtener niveles y tiempo de localStorage
+let nivelesSeleccionados = [];
+const nivelesRaw = localStorage.getItem("nivelesBd");
+
+if (nivelesRaw) {
+  try {
+    let arr;
+    if (nivelesRaw.startsWith("[")) {
+      arr = JSON.parse(nivelesRaw);
+    } else {
+      arr = nivelesRaw.split(',').map(n => {
+        const num = parseInt(n.trim());
+        return isNaN(num) ? 1 : Math.max(1, Math.min(num, 10)); // Asegura que esté entre 1 y 10
+      });
+    }
+    nivelesSeleccionados = [...new Set(arr.filter(n => !isNaN(n) && n > 0 && n <= 10))]; // Elimina duplicados
+    if (nivelesSeleccionados.length === 0) nivelesSeleccionados = [1];
+  } catch (e) {
+    console.warn("Error al leer nivelesBd", e);
+    nivelesSeleccionados = [1];
+  }
+} else {
+  nivelesSeleccionados = [1];
+}
+
+// Obtener tiempo de localStorage
+let timeSel = 0;
+const tiempoRaw = localStorage.getItem("tiempoBd");
+if (tiempoRaw) {
+  try {
+    timeSel = parseInt(JSON.parse(tiempoRaw));
+    if (isNaN(timeSel) || timeSel <= 0) timeSel = 0;
+  } catch (e) {
+    console.warn("Error al leer tiempoBd", e);
+    timeSel = 0;
+    let tiempoTotal = 0; 
+  }
+}
+
 let nivelActualIndex = 0;
 let level = nivelesSeleccionados[nivelActualIndex];
+let playerPos = { x: 0, y: 0 };
+let totalMoves = 0;
+let startTime = Date.now();
+let vidas = 3;
+let resultados = [];
+let tiempoTotal = 0; 
 
 const mazes = [
   // Nivel 1 (5x5)
@@ -112,12 +157,6 @@ const mazes = [
   ],
 ];
 
-let playerPos = { x: 0, y: 0 };
-let totalMoves = 0;
-let startTime = Date.now();
-let vidas = 3;
-let resultados = [];
-
 
 const resultadosContainer = document.createElement("div");
 resultadosContainer.style.marginTop = "20px";
@@ -135,36 +174,51 @@ downloadBtn.style.cursor = "pointer";
 downloadBtn.onclick = descargarResultados;
 document.body.appendChild(downloadBtn);
 
-let timeSel = parseInt(localStorage.getItem("timeSel") || "0");
-let tiempoTotal = 0;
 
 function renderMaze(level) {
-  const maze = mazes[level - 1]; 
-  if (!maze) return;
-
-  // Asegura que el elemento de tiempo existe
-  let tiempoEl = document.getElementById("tiempo");
-  if (!tiempoEl) {
-    tiempoEl = document.createElement("p");
-    tiempoEl.id = "tiempo";
-    document.body.insertBefore(tiempoEl, mazeContainer);
+  // Validar que el nivel exista
+  if (level < 1 || level > mazes.length) {
+    console.error(`Nivel ${level} no existe`);
+    finalizarJuego();
+    return;
   }
 
+  const maze = mazes[level - 1];
+  if (!maze) {
+    console.error(`Laberinto para nivel ${level} no definido`);
+    return;
+  }
+
+  // Reiniciar variables del nivel
   mazeContainer.innerHTML = "";
   mazeContainer.style.gridTemplateColumns = `repeat(${maze[0].length}, 40px)`;
   playerPos = { x: 0, y: 0 };
   totalMoves = 0;
+  startTime = Date.now();
 
+  // Limpiar temporizador anterior
   clearInterval(timerInterval);
-  document.getElementById("vidas")?.remove();
 
-  const vidasLabel = document.createElement("p");
-  vidasLabel.id = "vidas";
-  vidasLabel.textContent = `❤️ Vidas: ${vidas}`;
-  document.body.insertBefore(vidasLabel, mazeContainer);
+  // Actualizar UI
+  nivelLabel.textContent = `Nivel: ${level}`;
+  
+  // Mostrar vidas
+  const vidasEl = document.getElementById("vidas") || document.createElement("p");
+  vidasEl.id = "vidas";
+  vidasEl.textContent = `❤️ Vidas: ${vidas}`;
+  if (!document.getElementById("vidas")) {
+    document.body.insertBefore(vidasEl, mazeContainer);
+  }
 
-  // Manejo del tiempo
-  if (timeSel > 0 && !isNaN(timeSel)) {
+  // Configurar tiempo
+  const tiempoEl = document.getElementById("tiempo") || document.createElement("p");
+  tiempoEl.id = "tiempo";
+  if (!document.getElementById("tiempo")) {
+    document.body.insertBefore(tiempoEl, mazeContainer);
+  }
+
+  if (timeSel > 0) {
+    // Modo con tiempo límite
     let timeLeft = timeSel;
     tiempoEl.textContent = `⏱️ Tiempo restante: ${timeLeft}s`;
 
@@ -174,38 +228,41 @@ function renderMaze(level) {
 
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
-        vidas--;
-        info.textContent = `❌ Se acabó el tiempo. Te queda${vidas === 1 ? '' : 'n'} ${vidas} vida${vidas === 1 ? '' : 's'}.`;
-
-        if (vidas > 0) {
-          setTimeout(() => {
-            info.textContent = "";
-            renderMaze(level);
-          }, 2500);
-        } else {
-          finalizarJuego();
-        }
+        manejarTiempoAgotado();
       }
     }, 1000);
-    startTime = Date.now();
   } else {
-    startTime = Date.now();
+    // Modo sin tiempo límite (mostrar tiempo transcurrido)
     tiempoEl.textContent = "⏱️ Tiempo: 0s";
-
     timerInterval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - startTime) / 1000);
       tiempoEl.textContent = `⏱️ Tiempo: ${elapsed}s`;
     }, 1000);
   }
 
+  function manejarTiempoAgotado() {
+    vidas--;
+    info.textContent = `❌ Se acabó el tiempo. Te queda${vidas === 1 ? '' : 'n'} ${vidas} vida${vidas === 1 ? '' : 's'}.`;
+  
+    if (vidas > 0) {
+      setTimeout(() => {
+        info.textContent = "";
+        renderMaze(level);
+      }, 2500);
+    } else {
+      finalizarJuego();
+    }
+  }
+
+  // Renderizar laberinto
   for (let y = 0; y < maze.length; y++) {
     for (let x = 0; x < maze[y].length; x++) {
       const cell = document.createElement("div");
       cell.classList.add("cell");
+      
       if (maze[y][x] === 1) cell.classList.add("wall");
       else if (maze[y][x] === 2) cell.classList.add("trap");
       else cell.classList.add("path");
-      
 
       if (x === 0 && y === 0) cell.classList.add("start");
       if (x === maze[y].length - 1 && y === maze.length - 1) {
@@ -220,9 +277,8 @@ function renderMaze(level) {
   }
 
   drawPlayer();
-  nivelLabel.textContent = `Nivel: ${level}`;
-  
 }
+/* nivelLabel.textContent = `Nivel: ${level}`; */
 
 function drawPlayer() {
   document.querySelectorAll(".cell").forEach(cell =>
@@ -272,6 +328,7 @@ function movePlayer(dx, dy) {
 
 
 function checkVictory() {
+  console.log("tiempoTotal:", tiempoTotal);
   const maze = mazes[level - 1];
   if (
     playerPos.x === maze[0].length - 1 &&
