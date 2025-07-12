@@ -102,111 +102,11 @@ async function enviarDatos() {
 }
 
 
-/* document.getElementById("btnListo").addEventListener("click", async function () {
-  const ok = await enviarDatos();
-
-  if (ok) {
-    const codigo = localStorage.getItem("codigoGen");
-
-    if (!codigo) {
-      console.error("No se encontró el código en localStorage.");
-      return;
-    }
-
-    console.log("Código obtenido:", codigo);
-
-    const intervalo = setInterval(async () => {
-      try {
-        const response = await fetch(`https://backend-rocket-k6wn.onrender.com/partidas/inicio?codigo=${encodeURIComponent(codigo)}`);
-        const data = await response.json();
-
-        console.log("Estado recibido:", data);
-
-        if (data.success && data.estado === true) {
-          clearInterval(intervalo);
-          console.log("Partida iniciada, consultando juego...");
-
-          const resJuego = await fetch(`https://backend-rocket-k6wn.onrender.com/partidas/juegoPorProfe/${codigo}`);
-          const dataJuego = await resJuego.json();
-
-          if (dataJuego.success) {
-            const juego = dataJuego.juego;
-            const niveles = dataJuego.niveles;
-            const tiempo = dataJuego.tiempo;
-
-            let nivelesArray;
-            if (typeof niveles === "string") {
-              nivelesArray = niveles.split(",").map(n => Number(n.trim()));
-            } else if (Array.isArray(niveles)) {
-              nivelesArray = niveles;
-            } else {
-              nivelesArray = [];
-            }
-          
-            if (!Array.isArray(nivelesArray) || nivelesArray.length === 0) {
-              console.error("❌ Error: Niveles inválidos o vacíos:", niveles);
-              alert("Ocurrió un error al recibir los niveles del juego. Por favor, intenta de nuevo.");
-              return;
-            }
-          
-            if (typeof tiempo !== "number" || tiempo <= 0) {
-              console.error("❌ Error: Tiempo inválido:", tiempo);
-              alert("Ocurrió un error con el tiempo configurado del juego.");
-              return;
-            }
-          
-            localStorage.setItem("juegoBd", juego);
-            localStorage.setItem("nivelesBd", JSON.stringify(niveles));
-            localStorage.setItem("tiempoBd", JSON.stringify(tiempo));
-          
-            console.log("✅ Datos guardados en localStorage:", {
-              juego, niveles: nivelesArray, tiempo
-            });
-
-            const juegoGuardado = localStorage.getItem("juegoBd");
-            const nivelesGuardado = localStorage.getItem("nivelesBd");
-            const tiempoGuardado = localStorage.getItem("tiempoBd");
-
-            console.log("jueg", juegoGuardado, "nc", nivelesGuardado, "ti", tiempoGuardado);
-
-          
-
-            console.log("jueg", juegoGuardado, "nc", nivelesGuardado, "ti", tiempoGuardado);
-
-            const rutasJuegos = {
-              "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
-              "Trivia": "/componentes/juegos/simonDice/indexTrivia.html",
-              "Emoji Game": "/componentes/juegos/emojis/nivel1/nivel1.html",
-              "Laberinto": "/componentes/juegos/laberinto/index.html"
-            };
-
-            const ruta = rutasJuegos[juego];
-
-            if (ruta) {
-              console.log("Redirigiendo al juego:", ruta);
-              window.location.href = ruta;
-            } else {
-              alert("No se encontró la ruta del juego: " + juego);
-            }
-
-          } else {
-            alert("No se pudo obtener el juego de la partida.");
-          }
-        }
-
-      } catch (error) {
-        console.error("Error al consultar estado de partida o juego:", error);
-      }
-    }, 3000);
-  }
-}); */
-
 document.getElementById("btnListo").addEventListener("click", async function () {
   const ok = await enviarDatos();
 
   if (!ok) return;
 
-  // 📦 Obtener código desde /jugadores_partidas
   let codigo = null;
 
   try {
@@ -274,7 +174,6 @@ document.getElementById("btnListo").addEventListener("click", async function () 
             return;
           }
 
-          // ✅ Guardar datos en localStorage
           localStorage.setItem("juegoBd", juego);
           localStorage.setItem("nivelesBd", JSON.stringify(nivelesArray));
           localStorage.setItem("tiempoBd", JSON.stringify(tiempo));
@@ -284,7 +183,6 @@ document.getElementById("btnListo").addEventListener("click", async function () 
             juego, niveles: nivelesArray, tiempo, codigo
           });
 
-          // Redirigir al juego
           const rutasJuegos = {
             "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
             "Trivia": "/componentes/juegos/simonDice/indexTrivia.html",
