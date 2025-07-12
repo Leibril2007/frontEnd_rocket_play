@@ -107,6 +107,7 @@ function cargarCodigoJuego() {
   
         if (data.success) {
           alert("✅ Estado de la partida cambiado correctamente.");
+          window.location.href = "tiempo.html";
         } else {
           alert("⚠️ No se pudo cambiar el estado: " + data.message);
         }

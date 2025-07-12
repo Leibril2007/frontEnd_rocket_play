@@ -118,6 +118,8 @@ document.getElementById("btnListo").addEventListener("click", async function () 
       const ultimoRegistro = lista[lista.length - 1];
       codigo = ultimoRegistro.codigo || ultimoRegistro.codigo_partida;
 
+      localStorage.setItem("codBd", codigo);
+
       if (!codigo) {
         console.error("❌ No se encontró el código en el último registro.");
         alert("No se pudo obtener el código de la partida.");
