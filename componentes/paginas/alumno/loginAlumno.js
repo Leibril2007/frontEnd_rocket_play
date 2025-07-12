@@ -102,7 +102,7 @@ async function enviarDatos() {
 }
 
 
-document.getElementById("btnListo").addEventListener("click", async function () {
+/* document.getElementById("btnListo").addEventListener("click", async function () {
   const ok = await enviarDatos();
 
   if (ok) {
@@ -199,6 +199,116 @@ document.getElementById("btnListo").addEventListener("click", async function () 
       }
     }, 3000);
   }
+}); */
+
+document.getElementById("btnListo").addEventListener("click", async function () {
+  const ok = await enviarDatos();
+
+  if (!ok) return;
+
+  // 📦 Obtener código desde /jugadores_partidas
+  let codigo = null;
+
+  try {
+    const resJugadores = await fetch('https://backend-rocket-k6wn.onrender.com/jugadores_partidas');
+    const dataJugadores = await resJugadores.json();
+
+    if (dataJugadores.success && Array.isArray(dataJugadores.jugadores_partidas)) {
+      const lista = dataJugadores.jugadores_partidas;
+      const ultimoRegistro = lista[lista.length - 1];
+      codigo = ultimoRegistro.codigo || ultimoRegistro.codigo_partida;
+
+      if (!codigo) {
+        console.error("❌ No se encontró el código en el último registro.");
+        alert("No se pudo obtener el código de la partida.");
+        return;
+      }
+
+      console.log("📦 Código obtenido desde jugadores_partidas:", codigo);
+    } else {
+      console.error("❌ Formato inesperado al obtener jugadores_partidas.");
+      return;
+    }
+  } catch (err) {
+    console.error("❌ Error al obtener jugadores_partidas:", err);
+    return;
+  }
+
+  const intervalo = setInterval(async () => {
+    try {
+      const response = await fetch(`https://backend-rocket-k6wn.onrender.com/partidas/inicio?codigo=${encodeURIComponent(codigo)}`);
+      const data = await response.json();
+
+      console.log("Estado recibido:", data);
+
+      if (data.success && data.estado === true) {
+        clearInterval(intervalo);
+        console.log("Partida iniciada, consultando juego...");
+
+        const resJuego = await fetch(`https://backend-rocket-k6wn.onrender.com/partidas/juegoPorProfe/${codigo}`);
+        const dataJuego = await resJuego.json();
+
+        if (dataJuego.success) {
+          const juego = dataJuego.juego;
+          const niveles = dataJuego.niveles;
+          const tiempo = dataJuego.tiempo;
+
+          let nivelesArray;
+          if (typeof niveles === "string") {
+            nivelesArray = niveles.split(",").map(n => Number(n.trim()));
+          } else if (Array.isArray(niveles)) {
+            nivelesArray = niveles;
+          } else {
+            nivelesArray = [];
+          }
+
+          if (!Array.isArray(nivelesArray) || nivelesArray.length === 0) {
+            console.error("❌ Niveles inválidos:", niveles);
+            alert("Ocurrió un error con los niveles del juego.");
+            return;
+          }
+
+          if (typeof tiempo !== "number" || tiempo <= 0) {
+            console.error("❌ Tiempo inválido:", tiempo);
+            alert("Ocurrió un error con el tiempo configurado.");
+            return;
+          }
+
+          // ✅ Guardar datos en localStorage
+          localStorage.setItem("juegoBd", juego);
+          localStorage.setItem("nivelesBd", JSON.stringify(nivelesArray));
+          localStorage.setItem("tiempoBd", JSON.stringify(tiempo));
+          localStorage.setItem("codigoBd", codigo); // (opcional)
+
+          console.log("✅ Datos guardados:", {
+            juego, niveles: nivelesArray, tiempo, codigo
+          });
+
+          // Redirigir al juego
+          const rutasJuegos = {
+            "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
+            "Trivia": "/componentes/juegos/simonDice/indexTrivia.html",
+            "Emoji Game": "/componentes/juegos/emojis/nivel1/nivel1.html",
+            "Laberinto": "/componentes/juegos/laberinto/index.html"
+          };
+
+          const ruta = rutasJuegos[juego];
+
+          if (ruta) {
+            console.log("Redirigiendo a:", ruta);
+            window.location.href = ruta;
+          } else {
+            alert("No se encontró la ruta del juego: " + juego);
+          }
+        } else {
+          alert("No se pudo obtener el juego de la partida.");
+        }
+      }
+    } catch (error) {
+      console.error("❌ Error al consultar estado de la partida:", error);
+    }
+  }, 3000);
 });
+
 
 
