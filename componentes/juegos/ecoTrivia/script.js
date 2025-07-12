@@ -12,8 +12,32 @@ const nivelesCompletos = [
 ];
 
 // Configuración del juego
-let nivelesSeleccionados = localStorage.getItem("nivSel")?.split(",").map(n => parseInt(n) - 1) || [0];
-const niveles = nivelesSeleccionados.map(i => nivelesCompletos[i]).filter(Boolean);
+let nivelesSeleccionados = [];
+const nivelesRaw = localStorage.getItem("nivelesBd");
+
+if (nivelesRaw) {
+  try {
+    let arr;
+    if (nivelesRaw.startsWith("[")) {
+      arr = JSON.parse(nivelesRaw);
+    } else {
+      arr = nivelesRaw.split(',').map(n => {
+        const num = parseInt(n.trim());
+        return isNaN(num) ? 1 : Math.max(1, Math.min(num, nivelesCompletos.length)); // Asegura que esté entre 1 y el máximo
+      });
+    }
+    nivelesSeleccionados = [...new Set(arr.filter(n => !isNaN(n) && n > 0 && n <= nivelesCompletos.length))]; // Elimina duplicados
+    if (nivelesSeleccionados.length === 0) nivelesSeleccionados = [1];
+  } catch (e) {
+    console.warn("Error al leer nivelesBd", e);
+    nivelesSeleccionados = [1];
+  }
+} else {
+  nivelesSeleccionados = [1];
+}
+
+const niveles = nivelesSeleccionados.map(n => nivelesCompletos[n - 1]).filter(Boolean);
+console.log("✅ Niveles cargados:", niveles, "Seleccionados:", nivelesSeleccionados);
 
 // Variables del juego
 let nivelActual = 0;
@@ -45,19 +69,18 @@ function updateHearts() {
   }
 }
 
+// Función mostrarPregunta modificada
 function mostrarPregunta() {
   clearInterval(temporizador);
 
-  // ✅ Validar que exista un nivel válido
-  if (!Array.isArray(niveles) || niveles.length === 0) {
-    console.error("❌ No hay niveles válidos cargados");
+  // Verificar si hemos completado todos los niveles
+  if (nivelActual >= niveles.length) {
     finalizarJuego();
     return;
   }
 
   const preguntas = niveles[nivelActual];
-
-  // ✅ Validar que haya preguntas para el nivel actual
+  
   if (!preguntas || !Array.isArray(preguntas)) {
     console.error(`⚠️ No hay preguntas para el nivel ${nivelActual}`);
     finalizarJuego();
@@ -65,15 +88,18 @@ function mostrarPregunta() {
   }
 
   if (indice < preguntas.length) {
-    document.getElementById("nivelLabel").textContent = `Nivel ${nivelesSeleccionados[nivelActual] + 1}`;
+    const nivelAMostrar = nivelesSeleccionados[nivelActual] || 1;
+    document.getElementById("nivelLabel").textContent = `Nivel ${nivelAMostrar}`;
+    
+    // Resto del código para mostrar pregunta...
     document.getElementById("question").textContent = preguntas[indice].texto;
     document.getElementById("feedback").textContent = "";
     document.getElementById("feedback").className = "";
     document.getElementById("buttons").style.display = "flex";
 
-    // Configurar tiempo
-    let tiempoGuardado = localStorage.getItem("timeSel");
-    let tiempoBase = parseInt(tiempoGuardado);
+    // Configurar tiempo...
+    let tiempoGuardado = localStorage.getItem("tiempoBd");
+    let tiempoBase = parseInt(JSON.parse(tiempoGuardado));
     if (isNaN(tiempoBase) || tiempoBase <= 0) tiempoBase = 20;
 
     tiempo = tiempoBase;
@@ -88,19 +114,23 @@ function mostrarPregunta() {
       }
     }, 1000);
   } else {
-    nivelActual++;
+    // Avanzar al siguiente nivel
     indice = 0;
+    nivelActual++;
 
     if (nivelActual < niveles.length) {
-      document.getElementById("question").textContent = `🎉 ¡Subiste al Nivel ${nivelesSeleccionados[nivelActual] + 1}!`;
+      const siguienteNivel = nivelesSeleccionados[nivelActual] || nivelActual + 1;
+      document.getElementById("question").textContent = `🎉 ¡Subiste al Nivel ${siguienteNivel}!`;
       document.getElementById("feedback").textContent = "";
       document.getElementById("buttons").style.display = "none";
+      
       setTimeout(mostrarPregunta, 2000);
     } else {
       finalizarJuego();
     }
   }
 }
+
 
 function answer(seleccion) {
   clearInterval(temporizador);
@@ -143,18 +173,20 @@ function answer(seleccion) {
 }
 
 function finalizarJuego() {
-  // Guardar resultados
+  // Calcular el nivel máximo alcanzado correctamente
+  const nivelMaximoAlcanzado = nivelesSeleccionados[Math.min(nivelActual, nivelesSeleccionados.length - 1)] || 1;
+  
   resultadosFinales = {
     nombre: "Jugador",
     puntaje: puntos,
-    nivelMaximo: nivelesSeleccionados[Math.min(nivelActual, nivelesSeleccionados.length - 1)] + 1,
+    nivelMaximo: nivelMaximoAlcanzado,
     preguntasCorrectas: puntos,
     preguntasTotales: preguntasJugadas,
-    porcentajeExito: Math.round((puntos / preguntasJugadas) * 100),
+    porcentajeExito: preguntasJugadas > 0 ? Math.round((puntos / preguntasJugadas) * 100) : 0,
     fecha: new Date().toLocaleString()
   };
 
-  // Mostrar pantalla de resultados
+  // Resto del código de finalizarJuego...
   document.getElementById("game-container").style.display = "none";
   document.getElementById("result-screen").style.display = "block";
   
@@ -169,9 +201,9 @@ function finalizarJuego() {
     <div id="server-feedback"></div>
   `;
 
-  // Enviar resultados al servidor
   enviarResultadosAlServidor();
 }
+
 
 function downloadResults() {
   // Ocultar botones temporalmente
