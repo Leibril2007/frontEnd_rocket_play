@@ -131,6 +131,47 @@ document.getElementById("btnListo").addEventListener("click", async function () 
 
           if (dataJuego.success) {
             const juego = dataJuego.juego;
+            const niveles = dataJuego.niveles;
+            const tiempo = dataJuego.tiempo;
+
+            let nivelesArray;
+            if (typeof niveles === "string") {
+              nivelesArray = niveles.split(",").map(n => Number(n.trim()));
+            } else if (Array.isArray(niveles)) {
+              nivelesArray = niveles;
+            } else {
+              nivelesArray = [];
+            }
+          
+            if (!Array.isArray(nivelesArray) || nivelesArray.length === 0) {
+              console.error("❌ Error: Niveles inválidos o vacíos:", niveles);
+              alert("Ocurrió un error al recibir los niveles del juego. Por favor, intenta de nuevo.");
+              return;
+            }
+          
+            if (typeof tiempo !== "number" || tiempo <= 0) {
+              console.error("❌ Error: Tiempo inválido:", tiempo);
+              alert("Ocurrió un error con el tiempo configurado del juego.");
+              return;
+            }
+          
+            localStorage.setItem("juegoBd", juego);
+            localStorage.setItem("nivelesBd", JSON.stringify(niveles));
+            localStorage.setItem("tiempoBd", JSON.stringify(tiempo));
+          
+            console.log("✅ Datos guardados en localStorage:", {
+              juego, niveles: nivelesArray, tiempo
+            });
+
+            const juegoGuardado = localStorage.getItem("juegoBd");
+            const nivelesGuardado = localStorage.getItem("nivelesBd");
+            const tiempoGuardado = localStorage.getItem("tiempoBd");
+
+            console.log("jueg", juegoGuardado, "nc", nivelesGuardado, "ti", tiempoGuardado);
+
+          
+
+            console.log("jueg", juegoGuardado, "nc", nivelesGuardado, "ti", tiempoGuardado);
 
             const rutasJuegos = {
               "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
@@ -159,4 +200,5 @@ document.getElementById("btnListo").addEventListener("click", async function () 
     }, 3000);
   }
 });
+
 
