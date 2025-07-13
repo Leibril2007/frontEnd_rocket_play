@@ -7,13 +7,20 @@
 </head>
 <body>
   <h1>🧩 Escape del Laberinto</h1>
-  
   <p id="nivelLabel">Nivel: 1</p>
-  <p id="tiempo">⏱️ Tiempo: 0s</p> 
-  
   <div id="mazeContainer"></div>
-  
   <p id="info"></p>
+<div id="controles">
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="mover('up')">⬆️</button>
+  </div>
+  <div style="text-align: center;">
+    <button onclick="mover('left')">⬅️</button>
+    <button onclick="mover('down')">⬇️</button>
+    <button onclick="mover('right')">➡️</button>
+  </div>
+</div>
+
 
   <script src="game.js"></script>
 </body>
