@@ -142,7 +142,7 @@ const niveles = nivelesSeleccionados.map(n => nivelesCompletos[n - 1]).filter(Bo
     document.getElementById("result-screen").style.display = "block";
     document.getElementById("game-container").style.display = "none";
   
-    fetch('https://frontend-rocket-play.onrender.com/api/resultados', {
+    fetch('https://backend-rocket-k6wn.onrender.com/api/resultados', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
