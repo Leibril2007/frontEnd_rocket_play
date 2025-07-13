@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Encuentra el Emoji</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Nivel <span id="nivel">1</span></h1>
+    <p id="vidas">Vidas: ❤️❤️❤️</p>
+    <p>Encuentra: <span id="emoji-target">😺</span></p>
+    <div id="emoji-options"></div>
+    <button id="next-level" style="display:none;">Siguiente Nivel</button>
+  </div>
+
+  <div id="summary" style="display:none;">
+    <h2>Resumen de Partida</h2>
+    <p>Aciertos: <span id="aciertos"></span></p>
+    <p>Fallos: <span id="fallos"></span></p>
+    <p>Tiempo total: <span id="tiempo-total"></span> segundos</p>
+    <p>Tu ranking: <span id="ranking"></span></p>
+    <button id="descargar-resumen">Descargar resumen</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -188,7 +188,7 @@ document.getElementById("btnListo").addEventListener("click", async function () 
           const rutasJuegos = {
             "EcoTrivia": "/componentes/juegos/ecoTrivia/index.html",
             "Trivia": "/componentes/juegos/simonDice/indexTrivia.html",
-            "Emoji Game": "/componentes/juegos/emojis/nivel1/nivel1.html",
+            "Emoji Game": "/componentes/juegos/emojiGame/index.html",
             "Laberinto": "/componentes/juegos/laberinto/index.html"
           };
 

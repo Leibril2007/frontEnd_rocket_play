@@ -1,0 +1,116 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at top left, #fdeff9, #dff9fb);
+    color: #444;
+  }
+  
+  h1, h2 {
+    color: #ff6fa5;
+    font-weight: 600;
+  }
+  
+  #game-container, #summary {
+    background: #fff;
+    border-radius: 18px;
+    padding: 30px;
+    max-width: 640px;
+    margin: 40px auto;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.4s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  #vidas, #tiempo-restante {
+    font-size: 1.2rem;
+    margin: 12px 0;
+    color: #ff85b3;
+    letter-spacing: 0.5px;
+  }
+  
+  #emoji-target {
+    font-size: 2rem;
+    font-weight: bold;
+    background: #fff3f9;
+    padding: 8px 16px;
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(255, 182, 193, 0.3);
+  }
+  
+  #emoji-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 18px;
+    justify-items: center;
+    margin: 25px 0;
+  }
+  
+  .emoji {
+    font-size: 2.4rem;
+    background-color: #ffe9f2;
+    padding: 12px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .emoji:hover {
+    background-color: #ffc8e3;
+    transform: scale(1.2);
+  }
+  
+  button {
+    background-color: #ff85b3;
+    color: white;
+    border: none;
+    padding: 14px 26px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+    margin-top: 15px;
+  }
+  
+  button:hover {
+    background-color: #ff6fa5;
+    transform: scale(1.05);
+  }
+  
+  @media screen and (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+  
+    #game-container, #summary {
+      padding: 18px;
+      margin: 20px 10px;
+      font-size: 0.95rem;
+    }
+  
+    h1, h2 {
+      font-size: 1.4rem;
+    }
+  
+    .emoji {
+      font-size: 2rem;
+      padding: 10px;
+    }
+  
+    button {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+  
+    #emoji-options {
+      grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+      gap: 12px;
+    }
+  }
+  
