@@ -41,7 +41,21 @@ const nivelesCompletos = [
   ]
 ];
 
-// Obtener niveles desde localStorage
+// 🧡 Vidas
+let vidas = 3;
+
+function actualizarVidas() {
+  const contenedor = document.getElementById("heart-container");
+  contenedor.innerHTML = "";
+  for (let i = 0; i < vidas; i++) {
+    const corazon = document.createElement("span");
+    corazon.textContent = "❤️";
+    corazon.style.fontSize = "24px";
+    corazon.style.marginRight = "5px";
+    contenedor.appendChild(corazon);
+  }
+}
+
 let nivelesSeleccionados = [];
 const nivelesRaw = localStorage.getItem("nivelesBd");
 
@@ -66,92 +80,96 @@ if (nivelesRaw) {
   nivelesSeleccionados = [1];
 }
 
-// Usar solo los niveles seleccionados
 const niveles = nivelesSeleccionados.map(n => nivelesCompletos[n - 1]).filter(Boolean);
 
-  
-  let nivelActual = 0;
-  let indice = 0;
-  let puntos = 0;
-  let preguntasJugadas = 0;
-  let tiempoRestante = 10;
-  let temporizador;
-  
-  function iniciarTemporizador() {
-    clearInterval(temporizador);
-    let tiempoGuardado = localStorage.getItem("tiempoBd");
-    let tiempoBase = parseInt(JSON.parse(tiempoGuardado));
-    if (isNaN(tiempoBase) || tiempoBase <= 0) tiempoBase = 10;
-    tiempoRestante = tiempoBase;
+let nivelActual = 0;
+let indice = 0;
+let puntos = 0;
+let preguntasJugadas = 0;
+let tiempoRestante = 10;
+let temporizador;
 
-    document.getElementById("tiempo").style.display = "block";
+function iniciarTemporizador() {
+  clearInterval(temporizador);
+  let tiempoGuardado = localStorage.getItem("tiempoBd");
+  let tiempoBase = parseInt(JSON.parse(tiempoGuardado));
+  if (isNaN(tiempoBase) || tiempoBase <= 0) tiempoBase = 10;
+  tiempoRestante = tiempoBase;
+
+  document.getElementById("tiempo").style.display = "block";
+  document.getElementById("tiempo").textContent = `⏱️ ${tiempoRestante} segundos`;
+
+  temporizador = setInterval(() => {
+    tiempoRestante--;
     document.getElementById("tiempo").textContent = `⏱️ ${tiempoRestante} segundos`;
-  
-    temporizador = setInterval(() => {
-      tiempoRestante--;
-      document.getElementById("tiempo").textContent = `⏱️ ${tiempoRestante} segundos`;
-  
-      if (tiempoRestante <= 0) {
-        clearInterval(temporizador);
-        document.getElementById("feedback").textContent = "⏰ Tiempo agotado";
-        preguntasJugadas++;
+
+    if (tiempoRestante <= 0) {
+      clearInterval(temporizador);
+      document.getElementById("feedback").textContent = "⏰ Tiempo agotado";
+      preguntasJugadas++;
+      vidas--;
+      actualizarVidas();
+      if (vidas <= 0) {
+        finalizarPartida();
+      } else {
         indice++;
         document.getElementById("tiempo").style.display = "none";
         setTimeout(mostrarPregunta, 1500);
       }
-    }, 1000);
-  }
-  
-  function mostrarPregunta() {
-    const preguntas = niveles[nivelActual];
-  
-    if (indice < preguntas.length) {
-      document.getElementById("nivelLabel").textContent = `Nivel ${nivelesSeleccionados[nivelActual] || (nivelActual + 1)} / ${nivelesCompletos.length}`;
-      document.getElementById("question").textContent = preguntas[indice].texto;
-      document.getElementById("feedback").textContent = "";
-      document.getElementById("buttons").style.display = "flex";
-      document.getElementById("tiempo").style.display = "block";
-      iniciarTemporizador();
-    } else {
-      nivelActual++;
-      indice = 0;
-  
-      if (nivelActual < niveles.length) {
-        const numeroNivelReal = nivelesSeleccionados[nivelActual] || (nivelActual + 1);
-        document.getElementById("question").textContent = `🎉 ¡Subiste al Nivel ${numeroNivelReal}!`;
+    }
+  }, 1000);
+}
 
-        document.getElementById("feedback").textContent = "";
-        document.getElementById("buttons").style.display = "none";
-        document.getElementById("tiempo").style.display = "none";
-        setTimeout(mostrarPregunta, 2000);
-      } else {
-        finalizarPartida();
-      }
+function mostrarPregunta() {
+  const preguntas = niveles[nivelActual];
+
+  if (indice < preguntas.length) {
+    document.getElementById("nivelLabel").textContent = `Nivel ${nivelesSeleccionados[nivelActual] || (nivelActual + 1)} / ${nivelesCompletos.length}`;
+    document.getElementById("question").textContent = preguntas[indice].texto;
+    document.getElementById("feedback").textContent = "";
+    document.getElementById("buttons").style.display = "flex";
+    document.getElementById("tiempo").style.display = "block";
+    iniciarTemporizador();
+  } else {
+    nivelActual++;
+    indice = 0;
+
+    if (nivelActual < niveles.length) {
+      const numeroNivelReal = nivelesSeleccionados[nivelActual] || (nivelActual + 1);
+      document.getElementById("question").textContent = `🎉 ¡Subiste al Nivel ${numeroNivelReal}!`;
+      document.getElementById("feedback").textContent = "";
+      document.getElementById("buttons").style.display = "none";
+      document.getElementById("tiempo").style.display = "none";
+      setTimeout(mostrarPregunta, 2000);
+    } else {
+      finalizarPartida();
     }
   }
-  
-  function finalizarPartida() {
-    clearInterval(temporizador);
-    document.getElementById("nivelLabel").textContent = "";
-    document.getElementById("question").textContent = "🎊 ¡Terminaste todos los niveles!";
-    document.getElementById("buttons").style.display = "none";
-    document.getElementById("tiempo").style.display = "none";
-    document.getElementById("score").style.display = "none";
-  
-    // ✅ Mostrar contenedor de resultados
-    document.getElementById("result-screen").style.display = "block";
-    document.getElementById("game-container").style.display = "none";
-  
-    fetch('https://backend-rocket-k6wn.onrender.com/api/resultados', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nombre: "jugador",
-        puntaje: puntos,
-        nivel: nivelActual + 1,
-        preguntas_jugadas: preguntasJugadas
-      })
+}
+
+function finalizarPartida() {
+  clearInterval(temporizador);
+  document.getElementById("nivelLabel").textContent = "";
+  document.getElementById("question").textContent = vidas <= 0
+    ? "💀 ¡Se acabaron tus vidas! Fin del juego."
+    : "🎊 ¡Terminaste todos los niveles!";
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("tiempo").style.display = "none";
+  document.getElementById("score").style.display = "none";
+
+  document.getElementById("result-screen").style.display = "block";
+  document.getElementById("game-container").style.display = "none";
+
+  fetch('https://backend-rocket-k6wn.onrender.com/api/resultados', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      nombre: "jugador",
+      puntaje: puntos,
+      nivel: nivelActual + 1,
+      preguntas_jugadas: preguntasJugadas
     })
+  })
     .then(res => res.json())
     .then(data => {
       const resumenHTML = `
@@ -178,9 +196,7 @@ const niveles = nivelesSeleccionados.map(n => nivelesCompletos[n - 1]).filter(Bo
           </p>
         </div>
       `;
-  document.getElementById("server-feedback").innerHTML = resumenHTML;
-  
-      // ✅ Activar botón de descarga
+      document.getElementById("server-feedback").innerHTML = resumenHTML;
       const btnDescargar = document.getElementById("btn-descargar");
       btnDescargar.style.display = "inline-block";
       btnDescargar.onclick = () => {
@@ -191,73 +207,83 @@ const niveles = nivelesSeleccionados.map(n => nivelesCompletos[n - 1]).filter(Bo
       console.error("Error al guardar resultado:", err);
       document.getElementById("feedback").textContent = `
   ⚠️ No se pudo guardar el resultado, pero aquí está tu resumen:
-  
+
   🧾 Resumen de Partida:
   • Preguntas jugadas: ${preguntasJugadas}
   • Puntos acumulados: ${puntos}
   • Nivel alcanzado: ${nivelActual}
       `;
     });
-  }
-  
-  
-  function answer(seleccion) {
-    clearInterval(temporizador);
-    document.getElementById("tiempo").style.display = "none";
-  
-    const preguntas = niveles[nivelActual];
-  
-    if (indice < preguntas.length) {
-      const correcta = preguntas[indice].respuesta;
-      const esCorrecto = seleccion === correcta;
-  
-      document.getElementById("feedback").textContent = esCorrecto
-        ? "😊 ¡Correcto!"
-        : "🙃 Ups... incorrecto";
-  
-      if (esCorrecto) puntos++;
-      preguntasJugadas++;
-  
-      document.getElementById("score").textContent = `🌟 Puntos: ${puntos}`;
-      indice++;
-      setTimeout(mostrarPregunta, 1500);
+}
+
+ function answer(seleccion) {
+  clearInterval(temporizador);
+  document.getElementById("tiempo").style.display = "none";
+
+  const preguntas = niveles[nivelActual];
+
+  if (indice < preguntas.length) {
+    const correcta = preguntas[indice].respuesta;
+    const esCorrecto = seleccion === correcta;
+
+    document.getElementById("feedback").textContent = esCorrecto
+      ? "😊 ¡Correcto!"
+      : "🙃 Ups... incorrecto";
+
+    if (esCorrecto) {
+      puntos++;
+    } else {
+      vidas--;                    // 👈 Quitar vida si se equivocó
+      actualizarVidas();          // 👈 Actualizar corazones
+      if (vidas <= 0) {
+        finalizarPartida();       // 👈 Termina si se quedó sin vidas
+        return;                   // 👈 Detener aquí
+      }
     }
+
+    preguntasJugadas++;
+    document.getElementById("score").textContent = `🌟 Puntos: ${puntos}`;
+    indice++;
+    setTimeout(mostrarPregunta, 1500);
   }
-  
-  function restartGame() {
-    nivelActual = 0;
-    indice = 0;
-    puntos = 0;
-    preguntasJugadas = 0;
-    document.getElementById("score").textContent = `🌟 Puntos: 0`;
-    document.getElementById("result-screen").style.display = "none";
-    document.getElementById("game-container").style.display = "block";
-    document.getElementById("tiempo").style.display = "block";
-    document.getElementById("score").style.display = "block";
-    document.getElementById("btn-descargar").style.display = "none";
-    document.getElementById("feedback").textContent = "";
-    mostrarPregunta();
-  }
-  
-  function descargarResumen(preguntasJugadas, puntos, nivel, posicionGenerada) {
-    const resumen = `
-  🌼 EcoTrivia - Resumen de Partida 🌼
-  
-  📚 Preguntas jugadas: ${preguntasJugadas}
-  💎 Puntos acumulados: ${puntos}
-  🚀 Nivel alcanzado: ${nivel}
-  🏅 Posición en el ranking: ${posicionGenerada}
-  🎉 ¡Gracias por jugar, jugador! 🌸
-  `;
-  
-    const blob = new Blob([resumen], { type: "text/plain" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "ecoTrivia_resumen.txt";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-  
+}
+
+function restartGame() {
+  nivelActual = 0;
+  indice = 0;
+  puntos = 0;
+  preguntasJugadas = 0;
+  vidas = 3;
+  actualizarVidas();
+  document.getElementById("score").textContent = `🌟 Puntos: 0`;
+  document.getElementById("result-screen").style.display = "none";
+  document.getElementById("game-container").style.display = "block";
+  document.getElementById("tiempo").style.display = "block";
+  document.getElementById("score").style.display = "block";
+  document.getElementById("btn-descargar").style.display = "none";
+  document.getElementById("feedback").textContent = "";
   mostrarPregunta();
-  
+}
+
+function descargarResumen(preguntasJugadas, puntos, nivel, posicionGenerada) {
+  const resumen = `
+🌼 EcoTrivia - Resumen de Partida 🌼
+
+📚 Preguntas jugadas: ${preguntasJugadas}
+💎 Puntos acumulados: ${puntos}
+🚀 Nivel alcanzado: ${nivel}
+🏅 Posición en el ranking: ${posicionGenerada}
+🎉 ¡Gracias por jugar, jugador! 🌸
+  `;
+
+  const blob = new Blob([resumen], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "ecoTrivia_resumen.txt";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+actualizarVidas();
+mostrarPregunta();
