@@ -210,5 +210,38 @@ document.getElementById("btnListo").addEventListener("click", async function () 
   }, 3000);
 });
 
+// Función para marcar al jugador como finalizado
+/**
+ * Marca al jugador como finalizado en la partida actual.
+ * Llama a esta función desde el juego cuando el alumno termina.
+ * Ejemplo de uso en el juego: import { marcarJugadorFinalizado } from '../../paginas/alumno/loginAlumno.js';
+ * Luego llama: marcarJugadorFinalizado();
+ */
+export async function marcarJugadorFinalizado() {
+  try {
+    // Recupera usuario y código de partida desde localStorage
+    const usuario = localStorage.getItem("usuario") || document.getElementById("usuario")?.value;
+    const codigo = localStorage.getItem("codBd") || localStorage.getItem("codigoBd") || document.getElementById("codigo")?.value;
+    if (!usuario || !codigo) {
+      console.error("No se encontró usuario o código de partida para marcar como finalizado.");
+      return false;
+    }
+    const res = await fetch(`https://backend-rocket-k6wn.onrender.com/jugador_finaliza/${encodeURIComponent(codigo)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ usuario, terminado: true })
+    });
+    if (!res.ok) {
+      console.error("Error al marcar jugador como finalizado");
+      return false;
+    }
+    console.log("Jugador marcado como finalizado");
+    return true;
+  } catch (err) {
+    console.error("Error de conexión al marcar jugador finalizado", err);
+    return false;
+  }
+}
+
 
 
