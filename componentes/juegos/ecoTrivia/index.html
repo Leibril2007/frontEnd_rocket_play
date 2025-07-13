@@ -4,24 +4,35 @@
   <meta charset="UTF-8" />
   <title>EcoTrivia</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+
+#heart-container {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Contenedor del juego -->
   <div id="game-container" class="container">
     <h1>🌿 EcoTrivia</h1>
-    
-    <div id="heart-container"></div> <!-- Vidas -->
+
+    <div id="heart-container" style="font-size: 24px; color: red;"></div>
+
     <div class="nivel" id="nivelLabel"></div>
+
     <div class="question" id="question"></div>
-    
-    <div class="buttons" id="buttons">
+
+    <div class="buttons" id="buttons" style="display: flex; gap: 10px; margin-top: 10px;">
       <button class="true" onclick="answer(true)">✅ Verdadero</button>
       <button class="false" onclick="answer(false)">❌ Falso</button>
     </div>
 
     <div class="feedback" id="feedback"></div>
 
-    <div id="tiempo">⏱️ 0 segundos</div> <!-- Tiempo -->
+    <div id="tiempo" style="margin-top: 10px;">⏱️ 0 segundos</div>
 
     <div class="score" id="score">🌟 Puntos: 0</div>
   </div>
@@ -32,7 +43,6 @@
     <p id="ranking-info"></p>
     <div id="server-feedback"></div>
 
-    <!-- 🧾 Resumen de Partida visual -->
     <div id="resumen-partida" class="resumen-card" style="display:none;">
       <h3>🧾 Resumen de Partida</h3>
       <ul>
@@ -42,10 +52,9 @@
       <p class="gracias">🎉 ¡Gracias por jugar, <span id="resumen-nombre">jugador</span>!</p>
     </div>
 
-    <!-- ✅ Botón de descarga del resumen -->
     <button id="btn-descargar" style="display:none;">📄 Descargar resumen</button>
 
-    <button onclick="restartGame()">Reiniciar Juego</button>
+    <button onclick="restartGame()">🔄 Reiniciar Juego</button>
   </div>
 
   <script src="script.js"></script>
