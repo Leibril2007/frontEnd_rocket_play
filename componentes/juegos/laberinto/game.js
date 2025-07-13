@@ -1,4 +1,3 @@
-
 const mazeContainer = document.getElementById("mazeContainer");
 const info = document.getElementById("info");
 const nivelLabel = document.getElementById("nivelLabel");
@@ -40,7 +39,6 @@ if (tiempoRaw) {
   } catch (e) {
     console.warn("Error al leer tiempoBd", e);
     timeSel = 0;
-    let tiempoTotal = 0; 
   }
 }
 
@@ -51,7 +49,9 @@ let totalMoves = 0;
 let startTime = Date.now();
 let vidas = 3;
 let resultados = [];
-let tiempoTotal = 0; 
+let tiempoTotal = 0;
+let posicionFinalRanking = ""; // 🏅 Guarda posición para mostrar y descargar
+
 
 const mazes = [
   // Nivel 1 (5x5)
@@ -59,8 +59,8 @@ const mazes = [
     [0,1,0,0,0],
     [0,1,0,1,0],
     [0,0,0,1,0],
-    [1,1,0,1,0],  // Trampa movida de (3,2)
-    [0,0,2,0,0],  // Trampa colocada en camino lateral (4,2)
+    [1,1,0,1,0],
+    [0,0,0,0,0],  // Removida la trampa del camino principal
   ],
   // Nivel 2 (5x5)
   [
@@ -73,29 +73,29 @@ const mazes = [
   // Nivel 3 (6x6)
   [
     [0,1,1,1,1,0],
-    [0,0,0,0,1,2], // Trampa movida a (1,5) - final de camino falso
+    [0,0,0,0,1,0], // Removida trampa que bloqueaba
     [1,1,0,1,1,0],
     [1,0,0,0,0,0],
-    [1,2,1,0,1,1],
-    [1,0,0,0,0,0], // Trampa original en (5,3) removida
+    [1,0,1,0,1,1], // Removida trampa del camino
+    [1,0,0,0,0,0],
   ],
   // Nivel 4 (6x6)
   [
     [0,1,0,1,0,0],
-    [0,1,0,1,2,1], // Trampa movida a (1,4) - camino lateral
+    [0,1,0,1,0,1], // Removida trampa
     [0,1,0,0,0,1],
     [0,1,1,1,0,1],
-    [0,0,0,2,0,1], // Trampa original en (4,4) movida
+    [0,0,0,0,0,1], // Removida trampa
     [1,1,0,0,0,0],
   ],
   // Nivel 5 (7x7)
   [
     [0,1,1,1,1,1,0],
     [0,0,0,0,0,1,0],
-    [1,0,1,1,0,1,2], // Trampa movida a (2,6) - final de camino falso
+    [1,0,1,1,0,1,0], // Removida trampa
     [1,0,0,1,0,0,0],
     [1,0,1,1,1,1,0],
-    [1,0,0,2,0,0,0],
+    [1,0,0,0,0,0,0], // Removida trampa
     [1,1,1,1,1,1,0],
   ],
   // Nivel 6 (7x7)
@@ -104,7 +104,7 @@ const mazes = [
     [0,0,0,0,0,1,0],
     [1,1,1,1,0,1,2],  // Trampa al final de camino falso (2,6)
     [1,0,0,0,0,2,0],  // Camino principal libre
-    [1,0,1,1,1,2,0],  // Eliminada trampa que bloqueaba
+    [1,0,1,1,1,0,0],  // Eliminada trampa que bloqueaba
     [1,0,0,0,0,0,0],
     [1,2,2,0,1,0,0],
   ],
@@ -146,7 +146,7 @@ const mazes = [
   [
     [0,0,2,1,1,1,1,1,1,1],
     [1,0,0,0,2,0,0,1,1,1],
-    [1,0,2,0,2,1,0,1,1,1],  // Eliminada trampa que bloqueaba
+    [1,0,2,0,0,1,0,1,1,1],  // Eliminada trampa que bloqueaba
     [1,0,1,0,0,2,2,0,0,1],  // Trampa en camino lateral (3,6)
     [1,0,1,2,0,1,1,1,0,1],
     [1,0,0,1,0,0,0,2,0,1],
@@ -157,11 +157,13 @@ const mazes = [
   ],
 ];
 
-
+// Crear contenedor de resultados
 const resultadosContainer = document.createElement("div");
 resultadosContainer.style.marginTop = "20px";
+resultadosContainer.style.display = "none";
 document.body.appendChild(resultadosContainer);
 
+// Crear botón de descarga
 const downloadBtn = document.createElement("button");
 downloadBtn.textContent = "⬇️ Descargar Resultados";
 downloadBtn.style.display = "none";
@@ -173,7 +175,6 @@ downloadBtn.style.color = "white";
 downloadBtn.style.cursor = "pointer";
 downloadBtn.onclick = descargarResultados;
 document.body.appendChild(downloadBtn);
-
 
 function renderMaze(level) {
   // Validar que el nivel exista
@@ -278,7 +279,6 @@ function renderMaze(level) {
 
   drawPlayer();
 }
-/* nivelLabel.textContent = `Nivel: ${level}`; */
 
 function drawPlayer() {
   document.querySelectorAll(".cell").forEach(cell =>
@@ -309,11 +309,17 @@ function movePlayer(dx, dy) {
     if (maze[newY][newX] === 2) {
       vidas--;
       info.textContent = `⚠️ ¡Trampa! Pierdes una vida. Vidas restantes: ${vidas}`;
+      
+      // Actualizar display de vidas
+      const vidasEl = document.getElementById("vidas");
+      if (vidasEl) vidasEl.textContent = `❤️ Vidas: ${vidas}`;
+      
       if (vidas <= 0) {
+        clearInterval(timerInterval);
         finalizarJuego();
         return;
       } else {
-        // Puedes reiniciar el nivel o devolver al inicio
+        // Reiniciar el nivel después de pisar una trampa
         setTimeout(() => {
           info.textContent = "";
           renderMaze(level);
@@ -326,9 +332,7 @@ function movePlayer(dx, dy) {
   }
 }
 
-
 function checkVictory() {
-  console.log("tiempoTotal:", tiempoTotal);
   const maze = mazes[level - 1];
   if (
     playerPos.x === maze[0].length - 1 &&
@@ -345,75 +349,161 @@ function checkVictory() {
     }
 
     tiempoTotal += elapsedTime;
+    
+    // Guardar resultado del nivel
+    const resultadoNivel = {
+      nivel: level,
+      movimientos: totalMoves,
+      tiempo: elapsedTime,
+      completado: true
+    };
+    
     guardarResultado(level, totalMoves, elapsedTime);
-    resultados.push(`Nivel ${level}: ${totalMoves} movimientos, ${elapsedTime}s`);
+    resultados.push(resultadoNivel);
 
-    info.textContent = `✅ ¡Nivel ${level} completado!`;
+    info.textContent = `✅ ¡Nivel ${level} completado! Movimientos: ${totalMoves}, Tiempo: ${elapsedTime}s`;
 
+    // Avanzar al siguiente nivel
     nivelActualIndex++;
     if (nivelActualIndex < nivelesSeleccionados.length) {
       level = nivelesSeleccionados[nivelActualIndex];
       setTimeout(() => {
         info.textContent = "";
         renderMaze(level);
-      }, 1500);
+      }, 2000);
     } else {
-      finalizarJuego();
+      // Todos los niveles completados
+      setTimeout(() => {
+        finalizarJuego();
+      }, 2000);
     }
   }
 }
 
 function guardarResultado(nivel, movimientos, tiempo) {
+  console.log("🔄 Enviando datos a Render:", { nivel, movimientos, tiempo });
+
   fetch("https://backend-rocket-k6wn.onrender.com/laberinto/guardar", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ nivel, movimientos, tiempo })
   })
   .then(res => res.json())
-  .then(data => console.log("✔️ Resultado guardado:", data))
-  .catch(err => console.error("❌ Error al guardar resultado:", err));
+  .then(data => console.log("✅ Guardado OK:", data))
+  .catch(err => console.error("❌ Error guardando en Render:", err));
 }
+
 
 function finalizarJuego() {
   clearInterval(timerInterval);
-  const mensaje = vidas > 0
-    ? `🎉 ¡Juego completado! Tiempo total: ${tiempoTotal}s`
-    : `💀 Juego terminado. No te quedan vidas.`;
 
-  resultadosContainer.innerHTML = `<h2>📋 Resultados</h2>
-    <ul>${resultados.map(r => `<li>${r}</li>`).join("")}</ul>
-    <p><strong>Tiempo total:</strong> ${tiempoTotal}s</p>
-    <p><strong>Vidas restantes:</strong> ${vidas}</p>
-    <p><strong>Niveles completados:</strong> ${resultados.length}</p>
+  let mensaje, posicionResumen;
+
+  if (vidas > 0 && resultados.length === nivelesSeleccionados.length) {
+    mensaje = `🎉 ¡Felicitaciones! Has completado todos los niveles!`;
+    posicionResumen = "🏆 GANADOR - Completaste todos los niveles seleccionados";
+  } else if (vidas <= 0) {
+    mensaje = `💀 Juego terminado. Te quedaste sin vidas.`;
+    posicionResumen = `❌ ELIMINADO en el Nivel ${level} - Sin vidas restantes`;
+  } else {
+    mensaje = `🎮 Juego finalizado.`;
+    posicionResumen = `🔄 INCOMPLETO - Completaste ${resultados.length} de ${nivelesSeleccionados.length} niveles`;
+  }
+
+  const movimientosTotales = resultados.reduce((sum, r) => sum + r.movimientos, 0);
+  const nivelesCompletados = resultados.length;
+
+  // 🧠 Cálculo local del ranking
+  const eficiencia = Math.floor((nivelesCompletados * 10000) / (movimientosTotales + tiempoTotal));
+  const posicion = Math.max(1, 101 - Math.floor(eficiencia / 100));
+  posicionFinalRanking = `#${posicion} de 100 jugadores`;
+
+  const resultadosHTML = resultados.map(r => 
+    `<li>Nivel ${r.nivel}: ${r.movimientos} movimientos en ${r.tiempo}s ✅</li>`
+  ).join("");
+
+  resultadosContainer.innerHTML = `
+    <h2>📋 Resultados del Juego</h2>
+    <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 10px 0;">
+      <h3>${posicionResumen}</h3>
+    </div>
+    <ul style="text-align: left; padding-left: 20px;">
+      ${resultadosHTML}
+    </ul>
+    <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 10px 0;">
+      <p><strong>📊 Estadísticas Finales:</strong></p>
+      <p>⏱️ Tiempo total: ${tiempoTotal}s</p>
+      <p>❤️ Vidas restantes: ${vidas}</p>
+      <p>🎯 Niveles completados: ${nivelesCompletados} de ${nivelesSeleccionados.length}</p>
+      <p>🏃 Movimientos totales: ${movimientosTotales}</p>
+      <p>🏅 Posición en el ranking: ${posicionFinalRanking}</p>
+    </div>
   `;
+
+  resultadosContainer.style.display = "block";
   info.textContent = mensaje;
   downloadBtn.style.display = "inline-block";
 }
 
+
+
 function descargarResultados() {
+  const posicionResumen = vidas > 0 && resultados.length === nivelesSeleccionados.length
+    ? "🏆 GANADOR - Completaste todos los niveles seleccionados"
+    : vidas <= 0
+      ? `❌ ELIMINADO en el Nivel ${level} - Sin vidas restantes`
+      : `🔄 INCOMPLETO - Completaste ${resultados.length} de ${nivelesSeleccionados.length} niveles`;
+
   const texto = [
-    "🎮 Resultados del juego:",
-    ...resultados,
-    `⏱️ Tiempo total: ${tiempoTotal}s`,
-    `❤️ Vidas restantes: ${vidas}`,
-    `🔢 Niveles completados: ${resultados.length}`
+    "🎮 RESULTADOS DEL JUEGO DE LABERINTO",
+    "=".repeat(50),
+    "",
+    `📍 POSICIÓN FINAL: ${posicionResumen}`,
+    `🏅 RANKING: ${posicionFinalRanking || "No disponible"}`,
+    "",
+    "📋 RESULTADOS POR NIVEL:",
+    ...resultados.map(r => `  • Nivel ${r.nivel}: ${r.movimientos} movimientos en ${r.tiempo}s`),
+    "",
+    "📊 ESTADÍSTICAS FINALES:",
+    `  ⏱️ Tiempo total: ${tiempoTotal}s`,
+    `  ❤️ Vidas restantes: ${vidas}`,
+    `  🎯 Niveles completados: ${resultados.length} de ${nivelesSeleccionados.length}`,
+    `  🏃 Movimientos totales: ${resultados.reduce((sum, r) => sum + r.movimientos, 0)}`,
+    "",
+    `📅 Fecha: ${new Date().toLocaleString()}`,
+    "",
+    "¡Gracias por jugar! 🎮"
   ].join("\n");
 
-  const blob = new Blob([texto], { type: "text/plain" });
+  const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = "resultados_laberinto.txt";
+  a.download = `resultados_laberinto_${new Date().toISOString().split('T')[0]}.txt`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
+
+// Event listeners
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowUp") movePlayer(0, -1);
   if (e.key === "ArrowDown") movePlayer(0, 1);
   if (e.key === "ArrowLeft") movePlayer(-1, 0);
   if (e.key === "ArrowRight") movePlayer(1, 0);
 });
+function mover(direccion) {
+  switch (direccion) {
+    case "up": movePlayer(0, -1); break;
+    case "down": movePlayer(0, 1); break;
+    case "left": movePlayer(-1, 0); break;
+    case "right": movePlayer(1, 0); break;
+  }
+}
 
+
+// Iniciar el juego
 renderMaze(level);
